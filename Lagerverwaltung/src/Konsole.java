@@ -1,4 +1,10 @@
 
+
+/**
+ * 
+ * @author isedo
+ *
+ */
 public class Konsole implements Lagerverwaltung {
 
 	public static void main(String[] args) {

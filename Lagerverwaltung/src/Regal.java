@@ -2,11 +2,17 @@ import java.util.Arrays;
 
 public class Regal extends Lager {
 	static int regalId;
-	private int lagerId;
+	private double lagerId;
 	private int regalBreite;
 	private int regalHoehe;
 	Regal[] regale;
 
+	
+	/** 
+	 * @author isedo
+	 * 
+	 *
+	 */
 	Regal(int regalId, int lagerId, int regalBreite, int regalHoehe) {
 		
 		super();
@@ -23,6 +29,5 @@ public class Regal extends Lager {
 	@Override
 	public String toString() {
 		return "Regal [regale=" + Arrays.toString(regale) + "]";
-	}
 	
 }
