@@ -2,7 +2,7 @@
 
 /**
  * 
- * @author isedo
+ * @author isedo und Adrian
  *
  */
 public class Konsole implements Lagerverwaltung {
