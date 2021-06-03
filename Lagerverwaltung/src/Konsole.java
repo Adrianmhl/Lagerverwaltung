@@ -98,31 +98,27 @@ public class Konsole implements Lagerverwaltung {
 		
 		while(menuNr != 0) {
 
-			switch(menuNr) {
-			//Abbruch: Exit
-			case 0:
-				
-			break;
 			
+			//Abbruch: Exit
+			if(menuNr == 0) {
+				
+			}
+				
 			//Wareineingang	
-			case 1:
+			if(menuNr == 1) {
 				System.out.println("1 Kategorie: ");
-				System.out.println("1 Snacks, 2 Getraenke , 3 Zurück");
+				System.out.println("1 Snacks 2 Getraenke");
 				int katNr = Integer.parseInt(br.readLine());
 				
 					if(katNr == 1) {
 						wareneingangSnacks();
 					}
 				
-					if(katNr == 2) {
+					else if(katNr == 2) {
 						String kategorie = "Getraenke";
 					
-						/**
-						 * Marke
-						 */
-						// trycatch; Exception , & vllt. neue Methode schreiben ?
 						System.out.println("2 Marke: ");
-						System.out.println("1 Coca-Cola, 2 Sprite , 3 Red-Bull");
+						System.out.println("1 Coca-Cola 2 Sprite 3 Red-Bull");
 						int markeNr = Integer.parseInt(br.readLine());
 						String marke ="";
 
@@ -132,11 +128,11 @@ public class Konsole implements Lagerverwaltung {
 								marke = "Coca-Cola";
 							}
 
-							if (markeNr == 2) {
+							else if (markeNr == 2) {
 								marke = "Sprite";
 							}
 
-							if (markeNr == 3) {
+							else if (markeNr == 3) {
 								marke = "Red-Bull";
 							} 	
 							
@@ -150,16 +146,26 @@ public class Konsole implements Lagerverwaltung {
 							console.eingangProduktListe(marke, kategorie, anzahl);
 							console.alleAusgebenProducts();
 							System.out.println("**************************************************************");
-							break;
-						}  
-					} 
-					
-		
-			} 
+							
+						}
+					}  
+				} 
+			
+			
+			if (menuNr == 2) {
+				System.out.println("ayayyayaya");
+			}
 			menuAuswahl();
-			int menurNr = Integer.parseInt(br.readLine());
-		} 
+			menuNr = Integer.parseInt(br.readLine());
+			}
+		
 		System.out.println("Exit");
+		
+			
+		}
+		
+
+		
 	}
-}
+
 
