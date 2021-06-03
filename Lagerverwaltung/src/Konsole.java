@@ -30,122 +30,136 @@ public class Konsole implements Lagerverwaltung {
 		
 	}
 
-	/**
-	 * @author isedo
-	 * gespeicherte Produkte 
-	 */
-private List<Produkt> produktListe = new ArrayList<>();
-static Konsole console = new Konsole();
-	/**@author isedo
-	 * Produkte hinzuefugen (Wareneingang) 
-	 * ohne Bedingung --> später :Lagerplatz frei : ja,nein?
-	 * @param produkt
-	 */
-	public void eingangProdukt(String marke, String kategorie,int anzahl) {
+		/**
+		 * @author isedo
+		 * gespeicherte Produkte 
+		 */
+	private List<Produkt> produktListe = new ArrayList<>();
+	static Konsole console = new Konsole();
+		/**@author isedo
+		 * Produkte hinzuefugen (Wareneingang) 
+		 * ohne Bedingung --> später :Lagerplatz frei : ja,nein?
+		 * @param produkt
+		 */
+	
+	public void eingangProduktListe(String marke, String kategorie,int anzahl) {
+		
 		Produkt tmprodukt = new Produkt(marke, kategorie, anzahl);
 		this.produktListe.add(tmprodukt);
+		
 	}
-	
-	/**
-	 * @param produkt
-	 * 
-	 */
+		
+		/**
+		 * @param produkt
+		 * 
+		 */
 	public void ausgangProdukt(Produkt produkt) {
 		
 	}
 	
-	/**@author isedo
-	 * Produkte ausgeben (Inhalt) 
-	 * @param produkt
-	 */
+		/**@author isedo
+		 * Produkte ausgeben (Inhalt) 
+		 * @param produkt
+		 */
 	public void alleAusgebenProducts() {
 		for(Produkt alleProdukt : produktListe) {
 			System.out.println(alleProdukt);
 		}
 	}
+	/**
+	 * Auswahl
+	 */
+	public static void menuAuswahl() {
+		System.out.println("1 : Wareneingang");	
+		System.out.println("2 : Warenausgang");	
+		System.out.println("3 : Waren im Lager");
+		System.out.println("4 : Suche");
+		System.out.println("0 : Exit");
+	}
 	
+	public static void wareneingangSnacks() {
+		String kategorie = "Snacks";
+		System.out.println("noch in bearbeiung!");
+		System.out.println("**************************************************************");
+	}
+	
+	
+		
+		
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 	
-		/**
-		 * Menu + User Input (BufferedReader)
-		 */
+		menuAuswahl();
 		
-	System.out.println("1 : Wareneingang");	
-	System.out.println("2 : Warenausgang");	
-	System.out.println("3 : Waren im Lager");
-	System.out.println("4 : Suche");
-	System.out.println("0 : Exit");
-	
-	InputStreamReader is = new InputStreamReader(System.in);
-	BufferedReader br = new BufferedReader(is);
-	
-	// throws NumberFormatExeption, Integer (klasse).parseInt(static method)
-	int n = Integer.parseInt(br.readLine());
-	
-	
-	switch(n) {
-	//Abbruch: Exit
-	case 0:
-		break;
+		InputStreamReader is = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(is);
+		// throws NumberFormatExeption, Integer (klasse).parseInt(static method)
+		int menuNr = Integer.parseInt(br.readLine());
 		
-	//Wareineingang	
-	case 1:
+		while(menuNr != 0) {
+
+			switch(menuNr) {
+			//Abbruch: Exit
+			case 0:
+				
+			break;
+			
+			//Wareineingang	
+			case 1:
+				System.out.println("1 Kategorie: ");
+				System.out.println("1 Snacks, 2 Getraenke , 3 Zurück");
+				int katNr = Integer.parseInt(br.readLine());
+				
+					if(katNr == 1) {
+						wareneingangSnacks();
+					}
+				
+					if(katNr == 2) {
+						String kategorie = "Getraenke";
+					
+						/**
+						 * Marke
+						 */
+						// trycatch; Exception , & vllt. neue Methode schreiben ?
+						System.out.println("2 Marke: ");
+						System.out.println("1 Coca-Cola, 2 Sprite , 3 Red-Bull");
+						int markeNr = Integer.parseInt(br.readLine());
+						String marke ="";
+
+						if (markeNr == 1 | markeNr == 2 |  markeNr == 3 | markeNr == 0) {
+
+							if (markeNr == 1) {
+								marke = "Coca-Cola";
+							}
+
+							if (markeNr == 2) {
+								marke = "Sprite";
+							}
+
+							if (markeNr == 3) {
+								marke = "Red-Bull";
+							} 	
+							
+							System.out.println("3 Anzahl: ");
+							System.out.println("(max: ist/soll) "); //SUCHT freie Slots im lager / maschine
+							int anzahl = Integer.parseInt(br.readLine());
+
+
+							System.out.println("Eingang: ");
+
+							console.eingangProduktListe(marke, kategorie, anzahl);
+							console.alleAusgebenProducts();
+							System.out.println("**************************************************************");
+							break;
+						}  
+					} 
+					
 		
-		
-		//Manuell
-		
-		System.out.println("1 Marke: ");
-		System.out.println("1 Coca-Cola, 2 Sprite , 3 Red-Bull");
-		int markeNr = Integer.parseInt(br.readLine());
-		String marke ="";
-		//trycatch/ Exception , neue Methode schreiben
-		
-		if (markeNr == 1) {
-			 marke = "Coca-Cola";
-		}
-		
-		else if (markeNr == 2) {
-			 marke = "Sprite";
-		}
-		
-		else if (markeNr == 3) {
-			 marke = "Red-Bull";
+			} 
+			menuAuswahl();
+			int menurNr = Integer.parseInt(br.readLine());
 		} 
-		
-		
-		System.out.println("2 Kategorie: ");
-		String kategorie = br.readLine();
-		
-		System.out.println("3 Anzahl: ");
-		int anzahl = Integer.parseInt(br.readLine());
-		
-		console.eingangProdukt(marke, kategorie , anzahl);
-		
-	//Warenausgang	
-	case 2:
-		
-	//Liste aller Produkte ausgeben	
-	case 3:
-	
-	//Suchfunktion
-	case 4:
-		
+		System.out.println("Exit");
 	}
-		
-	/***
-	 * @author isedo
-	 * test -> später über switch case? manuell über 
-	 * konsole oder einscannen
-	 */
-//	Konsole console = new Konsole();
-//	
-//	
-//	console.eingangProdukt(new Produkt("CocaCola", "Getraenk", 100));
-//	console.eingangProdukt(new Produkt("Leitz-Ordner", "Buero-Artikel", 40));
-//	console.alleAusgebenProducts();
-	
-	}
-
-
 }
+
