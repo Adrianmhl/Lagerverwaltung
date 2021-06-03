@@ -75,6 +75,7 @@ public class Konsole implements Lagerverwaltung {
 		System.out.println("3 : Waren im Lager");
 		System.out.println("4 : Suche");
 		System.out.println("0 : Exit");
+		System.out.print("Eingabe: ");
 	}
 	
 	public static void wareneingangSnacks() {
@@ -106,8 +107,11 @@ public class Konsole implements Lagerverwaltung {
 				
 			//Wareineingang	
 			if(menuNr == 1) {
-				System.out.println("1 Kategorie: ");
-				System.out.println("1 Snacks 2 Getraenke");
+				System.out.println("***********************************************************************");
+				System.out.println("Kategorie: ");
+				System.out.println("1 : Snacks");
+				System.out.println("2 : Getraenke");
+				System.out.print("Eingabe: ");
 				int katNr = Integer.parseInt(br.readLine());
 				
 					if(katNr == 1) {
@@ -116,9 +120,9 @@ public class Konsole implements Lagerverwaltung {
 				
 					else if(katNr == 2) {
 						String kategorie = "Getraenke";
-					
-						System.out.println("2 Marke: ");
-						System.out.println("1 Coca-Cola 2 Sprite 3 Red-Bull");
+						System.out.println("***********************************************************************");
+						System.out.println("Marke: ");
+						System.out.println("1: Coca-Cola 2: Sprite 3: Red-Bull"); //  über datei laden
 						int markeNr = Integer.parseInt(br.readLine());
 						String marke ="";
 
@@ -145,7 +149,7 @@ public class Konsole implements Lagerverwaltung {
 
 							console.eingangProduktListe(marke, kategorie, anzahl);
 							console.alleAusgebenProducts();
-							System.out.println("**************************************************************");
+							System.out.println("***********************************************************************");
 							
 						}
 					}  
@@ -155,6 +159,9 @@ public class Konsole implements Lagerverwaltung {
 			if (menuNr == 2) {
 				System.out.println("ayayyayaya");
 			}
+			
+			System.out.println("Zahl zwischen 0 - 4");
+			System.out.println("***********************************************************************");
 			menuAuswahl();
 			menuNr = Integer.parseInt(br.readLine());
 			}
