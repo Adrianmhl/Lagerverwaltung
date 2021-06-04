@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+// Test für die Branche
 
 
 /**
@@ -123,7 +124,7 @@ public class Konsole implements Lagerverwaltung {
 			if (menuNr == 0) {
 
 			}
-<<<<<<< HEAD
+
 
 			// Wareineingang
 			if (menuNr == 1) {
