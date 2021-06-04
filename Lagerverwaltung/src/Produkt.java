@@ -57,6 +57,9 @@ public class Produkt {
 	}
 
 	@Override
+	/**
+	 * Lässt die Attribute der Klasse Produkte als String ausgeben
+	 */
 	public String toString() {
 		return "Produkt [marke=" + marke + ", kategorie=" + kategorie + ", produktId=" + produktId + "]";
 	}
