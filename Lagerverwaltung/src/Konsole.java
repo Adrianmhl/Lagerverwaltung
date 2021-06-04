@@ -65,11 +65,21 @@ public class Konsole implements Lagerverwaltung {
 	 * @param produkt
 	 */
 	public void alleAusgebenProducts() {
-		for (Produkt alleProdukt : produktListe) {
-			System.out.println(alleProdukt);
+		System.out.println("**************************************************************");
+		System.out.println("Waren im Lager:"); 
+		// IF STATE-ment falls lager leer
+		
+		if(produktListe.isEmpty()) {
+			System.out.println("LEER");
 		}
-	}
-
+			else {
+				for (Produkt alleProdukte : produktListe) {
+			
+					System.out.println(alleProdukte);
+				}
+			}
+		System.out.println("**************************************************************");
+		}
 	/**
 	 * Auswahl
 	 */
@@ -78,7 +88,7 @@ public class Konsole implements Lagerverwaltung {
 		System.out.println("2 : Warenausgang");
 		System.out.println("3 : Waren im Lager");
 		System.out.println("4 : Suche");
-		System.out.println("0 : Exit");
+		System.out.println("5 : Exit");
 	}
 
 	public static void wareneingangSnacks() {
@@ -105,26 +115,38 @@ public class Konsole implements Lagerverwaltung {
 		return id;
 
 	}
+	
+	/**
+	 * Getraenke Auswahl
+	 * @author isedo
+	 * @param auswahlGetraenke
+	 * @param markenGetraenke
+	 */
+	
+	public static void auswahlGetraenke(int auswahlGetraenke[], String markenGetraenke[]) {
+		
+		System.out.println("Getraenke");
+		for(int i = 0; i < auswahlGetraenke.length; i++) {
+			System.out.println(auswahlGetraenke[i] + " " + markenGetraenke[i]);
+		}
+				
+	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-
+	
 		menuAuswahl();
 
 		InputStreamReader is = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(is);
 		// throws NumberFormatExeption, Integer (klasse).parseInt(static method)
 		int menuNr = Integer.parseInt(br.readLine());
-
-		while (menuNr != 0) {
-
-			// Abbruch: Exit
-			if (menuNr == 0) {
-
-			}
+		
+		
+		while (menuNr != 5 ) {
 
 			// Wareineingang
 			if (menuNr == 1) {
-				System.out.println("1 Kategorie: ");
+				System.out.println("Kategorie: ");
 				System.out.println("1 Snacks 2 Getraenke");
 				int katNr = Integer.parseInt(br.readLine());
 
@@ -133,40 +155,62 @@ public class Konsole implements Lagerverwaltung {
 				}
 
 				else if (katNr == 2) {
+					
+					// Input
+					int auswahlGetraenke[] = {1,2,3};
+					String markeGetraenke[] = {"Coca-Cola","Sprite","Red-Bull"}; 
+					// Menu Getraenke
+					auswahlGetraenke(auswahlGetraenke, markeGetraenke);
+					
 					String kategorie = "Getraenke";
-
-					System.out.println("2 Marke: ");
-					System.out.println("1 Coca-Cola 2 Sprite 3 Red-Bull");
+					
+			
 					int markeNr = Integer.parseInt(br.readLine());
 					String marke = "";
-
-					if (markeNr == 1 | markeNr == 2 | markeNr == 3 | markeNr == 0) {
-
-						if (markeNr == 1) {
-							marke = "Coca-Cola";
-						}
-
-						else if (markeNr == 2) {
-							marke = "Sprite";
-						}
-
-						else if (markeNr == 3) {
-							marke = "Red-Bull";
-						}
-
-						System.out.println("Eingang: ");
-
-						console.eingangProduktListe(marke, kategorie);
-						console.alleAusgebenProducts();
-						System.out.println("**************************************************************");
-
-					}
-				}
+					
+					
+						//while-Schleife statt Exeption
+							
+							//BIG BROBLEM : Falls falsche Eingabezahl (z.B. 4) --> Zurück ins Menu: Getraenk
+					
+//							if(markeNr > auswahlGetraenke.length) {
+//								auswahlGetraenke(auswahlGetraenke, markenGetraenke);
+//								markeNr = Integer.parseInt(br.readLine());
+//								
+//							} else {
+							
+								
+								if (markeNr == auswahlGetraenke[0]) {
+									marke = markeGetraenke[0];
+									System.out.println("coke");
+								}
+		
+								else if (markeNr == auswahlGetraenke[1]) {
+									marke = markeGetraenke[1];
+								}
+		
+								else if (markeNr == auswahlGetraenke[2]) {
+									marke = markeGetraenke[2];
+								}
+		
+								System.out.println("Eingang: ");
+								console.eingangProduktListe(marke, kategorie);
+								console.alleAusgebenProducts();
+								
+						
+								} 
+								
+							
 			}
 
-			if (menuNr == 2) {
-				System.out.println("ayayyayaya");
+			if (menuNr == 3) {
+				console.alleAusgebenProducts();
 			}
+			
+			if (menuNr == 4) {
+				System.out.println("SUCHE *in Bearbeitung*");
+			}
+			
 			menuAuswahl();
 			menuNr = Integer.parseInt(br.readLine());
 		}
