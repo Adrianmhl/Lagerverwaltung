@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * 
  * @author isedo und Adrian 
@@ -140,6 +139,8 @@ public class Konsole implements Lagerverwaltung {
 								marke = "Red-Bull";
 							} 	
 							
+							
+							// statt anzahl manuell, automatisch alle freien slots füllen --> if-schleife
 							System.out.println("3 Anzahl: ");
 							System.out.println("(max: ist/soll) "); //SUCHT freie Slots im lager / maschine
 							int anzahl = Integer.parseInt(br.readLine());
