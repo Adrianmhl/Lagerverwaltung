@@ -3,10 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Random;
-=======
->>>>>>> main
+
 
 /**
  * 
@@ -157,7 +155,7 @@ public class Konsole implements Lagerverwaltung {
 
 						else if (markeNr == 3) {
 							marke = "Red-Bull";
-=======
+
 				
 			//Wareineingang	
 			if(menuNr == 1) {
@@ -176,7 +174,7 @@ public class Konsole implements Lagerverwaltung {
 						String kategorie = "Getraenke";
 						System.out.println("***********************************************************************");
 						System.out.println("Marke: ");
-						System.out.println("1: Coca-Cola 2: Sprite 3: Red-Bull"); //  über datei laden
+						System.out.println("1: Coca-Cola 2: Sprite 3: Red-Bull"); //  ï¿½ber datei laden
 						int markeNr = Integer.parseInt(br.readLine());
 						String marke ="";
 
@@ -195,7 +193,7 @@ public class Konsole implements Lagerverwaltung {
 							} 	
 							
 							
-							// statt anzahl manuell, automatisch alle freien slots füllen --> if-schleife
+							// statt anzahl manuell, automatisch alle freien slots fï¿½llen --> if-schleife
 							System.out.println("3 Anzahl: ");
 							System.out.println("(max: ist/soll) "); //SUCHT freie Slots im lager / maschine
 							int anzahl = Integer.parseInt(br.readLine());
@@ -207,7 +205,7 @@ public class Konsole implements Lagerverwaltung {
 							console.alleAusgebenProducts();
 							System.out.println("***********************************************************************");
 							
->>>>>>> main
+
 						}
 
 						System.out.println("Eingang: ");
