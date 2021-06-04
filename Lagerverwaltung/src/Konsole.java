@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * TESTTEST
  * @author isedo und Adrian 
  *
  */
@@ -68,12 +68,18 @@ public class Konsole implements Lagerverwaltung {
 	/**
 	 * Auswahl
 	 */
-	public static void menuAuswahl() {
+	public static void menuAuswahl(int ausw[], String menuAusw[]) {
 		System.out.println("1 : Wareneingang");	
-		System.out.println("2 : Warenausgang");	
-		System.out.println("3 : Waren im Lager");
-		System.out.println("4 : Suche");
-		System.out.println("0 : Exit");
+		
+		// Schleife: Auswahl
+		for(int i = 0; i < ausw.length; i++) {
+			System.out.println(ausw[i], menuAusw[i]);
+		}
+		
+//		System.out.println("2 : Warenausgang");	
+//		System.out.println("3 : Waren im Lager");
+//		System.out.println("4 : Suche");
+//		System.out.println("0 : Exit");
 		System.out.print("Eingabe: ");
 	}
 	
@@ -90,6 +96,10 @@ public class Konsole implements Lagerverwaltung {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 	
 		menuAuswahl();
+		
+		int auswahl[] = {0,1,2,3,4};
+		String menuAuswahl[] = {"Wareneingang", "Warenausgang", "Waren im Lager", "Suche", "Exit"};
+		
 		
 		InputStreamReader is = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(is);
