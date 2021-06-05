@@ -17,7 +17,7 @@ public class Lagerplatz {
 	 * @param vertikalerPlatz
 	 * @param horizontalerPlatz
 	 */
-	Lagerplatz(int regalId, int vertikalerPlatz, int horizontalerPlatz) {
+	public Lagerplatz(int regalId, int vertikalerPlatz, int horizontalerPlatz) {
 		this.regalId = regalId;
 		this.lagerplatzId = Integer.parseInt(
 				Integer.toString(regalId) + Integer.toString(vertikalerPlatz) + Integer.toString(horizontalerPlatz));

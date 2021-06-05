@@ -171,8 +171,8 @@ public class Konsole implements Lagerverwaltung {
 					
 						//while-Schleife statt Exeption
 							
-							//BIG BROBLEM : Falls falsche Eingabezahl (z.B. 4) --> Zur�ck ins Menu: Getraenk
-					
+							//BIG BROBLEM : Falls falsche Eingabezahl (z.B. 4) --> Zur�ck ins Menu: Getraenk
+							//->Dafür machen wir eine Exception "Falsche Eingabe" die das Menü neu startet
 //							if(markeNr > auswahlGetraenke.length) {
 //								auswahlGetraenke(auswahlGetraenke, markenGetraenke);
 //								markeNr = Integer.parseInt(br.readLine());

@@ -10,10 +10,11 @@ public class Regal {
 	private int regalHoehe;// Hat die Einheit Lagerplatz
 	int anzahlRegale; // Anzahl aller Regale
 	Regal[] regale; // Auflistung aller Regale
-	Lagerplatz[][] lagerplaetze; // Lagerplätze [Reihe] [Spalte]
+	Lagerplatz[][][] lagerplaetze; // Lagerplätze [regalId] [Spalte] [Reihe]
 
 	/**
-	 * Der Konstruktor erzeigt ein neues Regal
+	 * Der Konstruktor erzeigt ein neues Regal und dessen Lagerplätze Die
+	 * Lagerplätze werden direkt in den zugehörigen Array eingesetzt
 	 * 
 	 * @param lagerId
 	 * @param regalBreite
@@ -21,14 +22,29 @@ public class Regal {
 	 */
 	public Regal(int lagerId, int regalBreite, int regalHoehe) {
 		anzahlRegale++;
+		// Attribute mit Werten versehen
+
 		this.lagerId = lagerId;
 		this.regalBreite = regalBreite;
 		this.regalHoehe = regalHoehe;
+
+		// regalId erzeugen, nach obrigem Muster
 		this.regalId = Integer.parseInt(Integer.toString(lagerId) + Integer.toString(anzahlRegale));
+
+		// Erzeugtes Regal in Array regale stecken
 		if (regale != null) {
 			regale[0] = this;
 		} else {
-			regale[regale.length + 1] = this;
+			regale[regale.length] = this;
+		}
+
+		// Die neuen Lagerplätze erzeugen und direkt in Array lagerplaetze stecken
+		for (int i = regalBreite; i > 0; i--) {
+			for (int l = regalHoehe; l > 0; l--) {
+				lagerplaetze[this.regalId][i][l] = new Lagerplatz(this.regalId, i, l); // lagerplaetze [0][0] bleibt
+																						// frei, dafür sind die Nummern gleich
+			}
+
 		}
 	}
 
@@ -39,8 +55,16 @@ public class Regal {
 	 * @param regalId
 	 */
 	public void regalAbbauen(int regalId) {
+		Regal zumAbbauen;
 		// mit ID Regal ausfindig machen
+		for (int i = regale.length; i > 0; i--) {
+			if (regale[i - 1].regalId == regalId) {
+				zumAbbauen = regale[i - 1];
+			}
+		}
+
 		// Produkte im Regal Lagerplatz = null
+		
 		// Lagerplätze löschen
 		// Regal löschen
 	}
