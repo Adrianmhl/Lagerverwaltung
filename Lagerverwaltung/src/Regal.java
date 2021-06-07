@@ -66,7 +66,7 @@ public class Regal {
 		// Produkte im Regal Lagerplatz = null
 		for (int i = lagerplaetze[zumAbbauen.regalId].length; i > 0; i--) {
 			for (int l = lagerplaetze[zumAbbauen.regalId][i].length; l > 0; l--) {
-				lagerplaetze[zumAbbauen.regalId][i][l] = null;
+				lagerplaetze[zumAbbauen.regalId][i-1][l-1] = null;
 			}
 		}
 
