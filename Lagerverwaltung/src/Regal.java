@@ -42,7 +42,8 @@ public class Regal {
 		for (int i = regalBreite; i > 0; i--) {
 			for (int l = regalHoehe; l > 0; l--) {
 				lagerplaetze[this.regalId][i][l] = new Lagerplatz(this.regalId, i, l); // lagerplaetze [0][0] bleibt
-																						// frei, dafür sind die Nummern gleich
+																						// frei, dafür sind die Nummern
+																						// gleich
 			}
 
 		}
@@ -55,18 +56,20 @@ public class Regal {
 	 * @param regalId
 	 */
 	public void regalAbbauen(int regalId) {
-		Regal zumAbbauen;
+		Regal zumAbbauen = null;
 		// mit ID Regal ausfindig machen
 		for (int i = regale.length; i > 0; i--) {
 			if (regale[i - 1].regalId == regalId) {
-				zumAbbauen = regale[i - 1];
+				regale[i - 1] = null;
+			}
+		}
+		// Produkte im Regal Lagerplatz = null
+		for (int i = lagerplaetze[zumAbbauen.regalId].length; i > 0; i--) {
+			for (int l = lagerplaetze[zumAbbauen.regalId][i].length; l > 0; l--) {
+				lagerplaetze[zumAbbauen.regalId][i][l] = null;
 			}
 		}
 
-		// Produkte im Regal Lagerplatz = null
-		
-		// Lagerplätze löschen
-		// Regal löschen
 	}
 
 	public int getLagerId() {
