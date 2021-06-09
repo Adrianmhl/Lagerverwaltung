@@ -141,11 +141,8 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Getraenke Auswahl
+	 * Konsole Ausgabe: Menuauswahl
 	 * 
-	 * @author isedo
-	 * @param markenGetraenke
-	 * @param auswahlGetraenke
 	 */
 
 	public static void auswahlMenu(String markenGetraenke[], int auswahlGetraenke[]) {
@@ -156,6 +153,10 @@ public class Konsole implements Lagerverwaltung {
 
 	}
 	
+	/**
+	 * Überprüft zahl, ob gültig oder nicht gültig 
+	 *
+	 */
 	public static int menuZahl(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
 		
 		//Input Onjekt erzeugen
