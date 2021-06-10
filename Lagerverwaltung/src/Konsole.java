@@ -141,14 +141,14 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Konsole Ausgabe: Menuauswahl
+	 * Konsole Ausgabe: Menuauswahl 
 	 * 
 	 */
 
-	public static void auswahlMenu(String markenGetraenke[], int auswahlGetraenke[]) {
+	public static void auswahlMenu(String nr[], int bezeichnung[]) {
 
-		for (int i = 0; i < auswahlGetraenke.length; i++) {
-			System.out.println(auswahlGetraenke[i] + " " + markenGetraenke[i]);
+		for (int i = 0; i < nr.length; i++) {
+			System.out.println(bezeichnung[i] + " " + nr[i]);
 		}
 
 	}
