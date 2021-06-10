@@ -9,8 +9,8 @@ public class Input {
 //	private InputStreamReader isr; 
 //	private BufferedReader br; 
 	
-	private InputStreamReader is = new InputStreamReader(System.in);
-	private BufferedReader br = new BufferedReader(is); 
+	private InputStreamReader is;
+	private BufferedReader br;
 	
 	
 	Input() {
