@@ -1,6 +1,6 @@
 Kategorie,Marke
-Getränke,Cola
+Getranke,Cola
 Essen,Danone
 Haushaltsartikel,Braun
 Technik,Apple
-,Samsung
+Technik,Samsung

@@ -15,12 +15,8 @@ import java.util.Random;
 public class Konsole implements Lagerverwaltung {
 
 	static int ids[];
-	static List<Produkt> marken = new ArrayList<>();
+	static List<Produkt> markenListe = new ArrayList<>();
 	static Konsole console = new Konsole();
-	static InputStreamReader is = new InputStreamReader(System.in);
-	static BufferedReader br = new BufferedReader(is);
-	
-
 
 	@Override
 	public void einlagern(int lagerplatzId, int produktId) {
@@ -39,6 +35,30 @@ public class Konsole implements Lagerverwaltung {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public static void produktEinlesen(String fileName, List<Produkt> markenListe) throws FileNotFoundException {
+		
+			try {
+			
+			BufferedReader br = new BufferedReader( new FileReader(fileName));
+			String reihe;
+			
+			while((reihe = br.readLine()) != null) {
+				
+				String werte[] = reihe.split(",");   //werte[0] = Kategorie werte[1] = Marke
+				String kategorie = werte[0];
+				String marke = werte[1];
+				
+				markenListe.add(new Produkt(kategorie, marke));
+				
+			}
+			br.close();
+		} 
+			catch(IOException e) {
+			System.err.print("Die Zeile konnte nicht gelesen werden!");
+			
+		}
+	}
 
 	/**
 	 * Diese Methode liest aus einer Textdatei eingegebene Marken 
@@ -47,7 +67,7 @@ public class Konsole implements Lagerverwaltung {
 	 * @param dateipfad
 	 * @throws FileNotFoundException
 	 */
-//	public void kategorienEinlesen(String dateipfad) throws FileNotFoundException {
+	public void kategorienEinlesen(String dateipfad) throws FileNotFoundException {
 //
 //		BufferedReader br = new BufferedReader(new FileReader(dateipfad));
 //		try {
@@ -65,25 +85,9 @@ public class Konsole implements Lagerverwaltung {
 //			e.printStackTrace();
 //			System.err.print("Die Zeile konnte nicht gelesen werden!");
 //		}
-//	}
-
-	/**
-	 * @author isedo gespeicherte Produkte
-	 */
-
-	/**
-	 * @author isedo Produkte hinzuefugen (Wareneingang) ohne Bedingung --> spï¿½ter
-	 *         :Lagerplatz frei : ja,nein?
-	 * @param produkt
-	 */
-
-	public void eingangProduktListe(String marke, String kategorie) {
-
-		Produkt tmprodukt = new Produkt(marke, kategorie, idVergabe());
-		this.marken.add(tmprodukt);
-
 	}
 
+	
 	/**
 	 * @param produkt
 	 * 
@@ -97,29 +101,23 @@ public class Konsole implements Lagerverwaltung {
 	 * @param produkt
 	 */
 	public void alleAusgebenProducts() {
-		System.out.println("**************************************************************");
-		System.out.println("Waren im Lager:");
-		// IF STATE-ment falls lager leer
-
-		if (marken.isEmpty()) {
-			System.out.println("LEER");
-		} else {
-			for (Produkt alleProdukte : marken) {
-
-				System.out.println(alleProdukte);
-			}
-		}
-		System.out.println("**************************************************************");
-	}
-	
-	public static void wareneingangSnacks() {
-		String kategorie = "Snacks";
-		System.out.println("noch in bearbeiung!");
-		System.out.println("**************************************************************");
+//		System.out.println("**************************************************************");
+//		System.out.println("Waren im Lager:");
+//		// IF STATE-ment falls lager leer
+//
+//		if (markenListe.isEmpty()) {
+//			System.out.println("LEER");
+//		} else {
+//			for (Produkt alleProdukte : markenListe) {
+//
+//				System.out.println(alleProdukte);
+//			}
+//		}
+//		System.out.println("**************************************************************");
 	}
 
 	/**
-	 * Die Methode generiert eine einmalige Id fÃ¼r Proukte
+	 * Die Methode generiert eine einmalige Id fÃƒÂ¼r Proukte
 	 * 
 	 * @author Adrian
 	 */
@@ -147,12 +145,10 @@ public class Konsole implements Lagerverwaltung {
 		for (int i = 0; i < nr.length; i++) {
 			System.out.println(bezeichnung[i] + " " + nr[i]);
 		}
+		
+		System.out.println("++++++++++++++++++++++");
 
 	}
-	//////////////////////////// HIER
-////////////////////////////HIER
-////////////////////////////HIER
-////////////////////////////HIER
 	public static void auswahlMenu(List<Produkt> marken) {
 		
 		for (int i = 0; i < marken.size(); i++) {
@@ -162,15 +158,11 @@ public class Konsole implements Lagerverwaltung {
 			
 		}
 		
-		System.out.println(marken.size()+1 + " " + "Exit  (funktioniert noch nicht)" );
+		System.out.println(marken.size()+1 + " " + "Exit" );
 
 	}
-	
-	
-	
-	
 	/**
-	 * Überprüft zahl, ob gültig oder nicht gültig 
+	 * ÃœberprÃ¼ft zahl, ob gÃ¼ltig oder nicht gÃ¼ltig 
 	 *
 	 */
 	public static int menuZahl(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
@@ -178,24 +170,20 @@ public class Konsole implements Lagerverwaltung {
 		//Input Onjekt erzeugen
 		Input zahlInput  = new Input();
 		
-		//zahl.inputReader: überprüft Input (Menu Zahl) 
+		//zahl.inputReader: Ã¼berprÃ¼ft Input (Menu Zahl) 
 		return zahlInput.inputReader(eingabeText, eingabeErrorText, min, max);
 		
 	}
 	
-
-	private static void completeTransaction(int markeNr, List<Produkt> marken2) {
+	private static void completeTransaction(int markeNr, List<Produkt> produkt) {
 		
-		Produkt marke = marken2.get(markeNr);
+		Produkt marke = produkt.get(markeNr);
 		System.out.println(marke.getMarke());
-		
 		
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-
-	
-		
+		produktEinlesen("C:\\Users\\isedo\\git\\Lagerverwaltung\\Lagerverwaltung\\src\\EinzulesendeDatei.txt", markenListe);
 		// Einstellungen Hauptmenu
 		int hauptMenuNr;
 		int auswahlHauptMenu[] = { 1, 2, 3, 4, 5};
@@ -203,8 +191,6 @@ public class Konsole implements Lagerverwaltung {
 		int exit = auswahlHauptMenu.length;
 		// Ausgabe: Menu
 		auswahlMenu(auswahlMenu, auswahlHauptMenu);
-		
-		
 		
 		hauptMenuNr = menuZahl("Eingabe: ", "Error: Bitte Zahl zwischen:" 
 				+ auswahlHauptMenu[0] + " - " + auswahlHauptMenu.length, 
@@ -216,31 +202,19 @@ public class Konsole implements Lagerverwaltung {
 			// Wareineingang
 			if (hauptMenuNr == auswahlHauptMenu[0]) {
 				
-					marken.add(new Produkt("Coca-Cola", " Getraenk", 1));
-					marken.add(new Produkt("Coca-Colo", " Getraenk", 2));
-					marken.add(new Produkt("Coca-Cole", " Getraenk", 3));
 					
 					
-					// Menu Getraenke
-					auswahlMenu(marken);
-
-					String kategorie = "Getraenke";
-
-					int markeNr = menuZahl("Eingabe: ", "Error: Bitte Zahl zwischen:" 
-							+ 0 + " - " + marken.size(), 
-							0, marken.size());
+					int exitWareneingang = markenListe.size()+1;
+					// Output Konsole, alle Produkte
+					auswahlMenu(markenListe);
 					
+					int markeNr = menuZahl("Eingabe: ", "Error: Bitte Zahl zwischen:"
+					+ 1 + " - " + markenListe.size(),1, markenListe.size()+1);
+				
+					completeTransaction(markeNr-1, markenListe);			
 					
-					completeTransaction(markeNr, marken);
-					
-			
-//					console.eingangProduktListe(marken, kategorie);
-					console.alleAusgebenProducts();
-
 				}
-
 			
-
 			else if (hauptMenuNr == auswahlHauptMenu[2]) {
 				console.alleAusgebenProducts();
 			}
@@ -255,13 +229,8 @@ public class Konsole implements Lagerverwaltung {
 					  auswahlHauptMenu[0], auswahlHauptMenu.length);
 		}
 		System.out.println("Exit");
+		System.out.println("++++++++++++++++++++++");
 	}
-		
-
+	
 }
-
-
-
-
-
 

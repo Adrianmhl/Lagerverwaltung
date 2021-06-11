@@ -15,6 +15,12 @@ public class Produkt {
 		this.kategorie = kategorie;
 		this.marke = marke;
 	}
+	
+	public Produkt(String marke, String kategorie) {
+
+		this.kategorie = kategorie;
+		this.marke = marke;
+	}
 
 	public String getMarke() {
 		return marke;
