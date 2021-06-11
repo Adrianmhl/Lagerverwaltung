@@ -1,4 +1,3 @@
-Kategorie,Marke
 Getranke,Cola
 Essen,Danone
 Haushaltsartikel,Braun
