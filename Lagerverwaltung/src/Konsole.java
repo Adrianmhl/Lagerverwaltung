@@ -239,24 +239,21 @@ public class Konsole implements Lagerverwaltung {
 								"Error: Bitte Zahl zwischen:" + auswahlMenuRegal[0] + " - " + auswahlMenuRegal.length,
 								auswahlMenuRegal[0], auswahlMenuRegal.length);
 
-						// Hauptmenu
-						while (menuWaehlNr != exitHauptmenu) {
-
-						}
-
-						// Lager wählen
-						if (lagerWaehlNr == auswahlLagerMenu[1]) {
-							System.out.println("Lager wählen");
-
-							break;
-						} else if (lagerWaehlNr == exitLagerverwaltung)
-
-							System.out.println("Exit");
-						System.out.println("****************************");
-						;
 					}
+					System.out.println("Exit");
+
+					// Lager wählen
+					if (lagerWaehlNr == auswahlLagerMenu[1]) {
+						System.out.println("Lager wählen *in Bearbeitung*");
+
+					} else if (lagerWaehlNr == exitLagerverwaltung)
+
+						System.out.println("Exit");
+					System.out.println("****************************");
+					;
 				}
 			}
+
 			/**
 			 * Steurung: Produkt einlagern
 			 */
