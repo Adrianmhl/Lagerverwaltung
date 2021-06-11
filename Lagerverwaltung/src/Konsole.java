@@ -174,8 +174,8 @@ public class Konsole implements Lagerverwaltung {
 	private static void gewaehltesProduktConsoleAusgabe(int produktWahlNr, List<Produkt> produkt) {
 		Produkt katgMarke = produkt.get(produktWahlNr);
 		produktEinlagern(katgMarke);
-		System.out.printf("%s %-10s %s ", "Produkt eingelagert: ", katgMarke.getMarke(), katgMarke.getKategorie());
-
+		System.out.println("Produkt eingelagert:");
+		System.out.printf("%-10s %s\n", katgMarke.getMarke(), katgMarke.getKategorie());
 	}
 
 	/**
