@@ -102,8 +102,8 @@ public class Konsole implements Lagerverwaltung {
 	public void alleAusgebenProducts() {
 		System.out.println("**************************************************************");
 		System.out.println("Waren im Lager:");
+	    
 		// IF STATE-ment falls lager leer
-
 		if (produktListe.isEmpty()) {
 			System.out.println("LEER");
 		} else {
@@ -154,7 +154,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 	
 	/**
-	 * Überprüft zahl, ob gültig oder nicht gültig 
+	 * ï¿½berprï¿½ft zahl, ob gï¿½ltig oder nicht gï¿½ltig 
 	 *
 	 */
 	public static int menuZahl(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
@@ -162,7 +162,7 @@ public class Konsole implements Lagerverwaltung {
 		//Input Onjekt erzeugen
 		Input zahlInput  = new Input();
 		
-		//zahl.inputReader: überprüft Input (Menu Zahl) 
+		//zahl.inputReader: ï¿½berprï¿½ft Input (Menu Zahl) 
 		return zahlInput.inputReader(eingabeText, eingabeErrorText, min, max);
 		
 	}

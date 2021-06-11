@@ -3,3 +3,4 @@ Getränke,Cola
 Essen,Danone
 Haushaltsartikel,Braun
 Technik,Apple
+,Samsung
