@@ -8,7 +8,7 @@ import java.util.Random;
 
 /**
  * 
- * @author isedo und Adrian Version 11/06
+ * @author isedo und Adrian Version 12/06 0047
  */
 public class Konsole implements Lagerverwaltung {
 
