@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Lager {
 	private int lagerId;
 	static Lager[] lager;
-	int[] listeDerIds;
+	int[] listeDerIds; 
 
 	Lager(int lagerId) {
 		this.lagerId = lagerId;

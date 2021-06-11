@@ -10,13 +10,13 @@ public class Produkt {
 	private static int zaehler = 0;
 	private int produktId;
 
-	public Produkt(String marke, String kategorie, int produktId) {
+	public Produkt(String kategorie, String marke, int produktId) {
 		this.produktId = produktId;
 		this.kategorie = kategorie;
 		this.marke = marke;
 	}
-	
-	public Produkt(String marke, String kategorie) {
+
+	public Produkt(String kategorie, String marke) {
 
 		this.kategorie = kategorie;
 		this.marke = marke;
@@ -67,7 +67,11 @@ public class Produkt {
 	 * Lässt die Attribute der Klasse Produkte als String ausgeben
 	 */
 	public String toString() {
-		return "Produkt [marke=" + marke + ", kategorie=" + kategorie + ", produktId=" + produktId + "]";
+		return "Marke=" + marke + ", Kategorie=" + kategorie;
+	}
+
+	public String toString2() {
+		return "Produkt [Marke=" + marke + ", Kategorie=" + kategorie + ", ProduktId=" + produktId + "]";
 	}
 
 }
