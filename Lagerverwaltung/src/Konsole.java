@@ -183,8 +183,7 @@ public class Konsole implements Lagerverwaltung {
 	 * 
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		produktEinlesen("C:\\Users\\isedo\\git\\Lagerverwaltung\\Lagerverwaltung\\src\\EinzulesendeDatei.txt",
-				produktListe);
+		produktEinlesen("EinzulesendeDatei.txt",produktListe);
 		// Einstellungen Hauptmenu
 
 		int auswahlHauptMenu[] = { 1, 2, 3, 4, 5, 6 };
