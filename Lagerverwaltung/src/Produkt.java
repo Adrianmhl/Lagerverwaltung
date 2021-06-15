@@ -66,11 +66,15 @@ public class Produkt {
 	/**
 	 * Lässt die Attribute der Klasse Produkte als String ausgeben
 	 */
+
 	public String toString() {
+<<<<<<< HEAD
 		return "Marke=" + marke + ", Kategorie=" + kategorie;
 	}
 
 	public String toString2() {
+=======
+>>>>>>> main
 		return "Produkt [Marke=" + marke + ", Kategorie=" + kategorie + ", ProduktId=" + produktId + "]";
 	}
 
