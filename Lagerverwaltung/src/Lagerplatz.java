@@ -1,6 +1,6 @@
 /**
  * 
- * @author adrianmuhleisen
+ * @author Adrian
  *
  */
 public class Lagerplatz {
@@ -8,7 +8,7 @@ public class Lagerplatz {
 	private int regalId;// Id des Regals für diesen Lagerplatz
 	private int lagerplatzId;// Id des Lagerplatzs
 	Produkt belegung;// Der Ihnahlt des Lagerplatzs
-	Lagerplatz[] lagerplaetze;// Auflistung aller Lagerplätze
+	static Lagerplatz[] lagerplaetze;// Auflistung aller Lagerplätze
 
 	/**
 	 * Dieser Konstruktor erstellein neuen Lagerplatz
@@ -28,4 +28,46 @@ public class Lagerplatz {
 		}
 
 	}
+
+	/**
+	 * Diese Methode macht ein Lagerplatz mit seiner Id ausfindig
+	 * 
+	 * @author Adrian
+	 * @param lagerplatzId
+	 * @return
+	 */
+	public static Lagerplatz lagerplatzSuchen(int lagerplatzId) {
+
+		for (int i = lagerplaetze.length; i > 0; i--) {
+			if (lagerplaetze[i - 1].lagerplatzId == lagerplatzId) {
+				return lagerplaetze[i - 1];
+			}
+		}
+		return null;
+	}
+
+	public int getRegalId() {
+		return regalId;
+	}
+
+	public void setRegalId(int regalId) {
+		this.regalId = regalId;
+	}
+
+	public int getLagerplatzId() {
+		return lagerplatzId;
+	}
+
+	public void setLagerplatzId(int lagerplatzId) {
+		this.lagerplatzId = lagerplatzId;
+	}
+
+	public Produkt getBelegung() {
+		return belegung;
+	}
+
+	public void setBelegung(Produkt belegung) {
+		this.belegung = belegung;
+	}
+	
 }

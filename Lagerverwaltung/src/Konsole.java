@@ -19,20 +19,48 @@ public class Konsole implements Lagerverwaltung {
 	static int ids[];
 
 	@Override
+	/**
+	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein
+	 * 
+	 * @author Adrian
+	 * @param lagerplatzId
+	 * @param produktId
+	 */
 	public void einlagern(int lagerplatzId, int produktId) {
-		// TODO Auto-generated method stub
+		Produkt zurEinlagerung = produktSuchen(produktId);
+		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
+		zurEinlagerung.setLagerplatz(zuBelegen);
+		zuBelegen.setBelegung(zurEinlagerung);
 
 	}
 
 	@Override
-	public void ausbuchen(int lagepaltzId) {
-		// TODO Auto-generated method stub
+	/**
+	 * Diese Methode löscht die belegung des Lagerplatzs und den lagerplatz des Produkts
+	 * @author Adrian
+	 * @param lagerplatzId
+	 */
+	public void ausbuchen(int lagerplatzId) {
+		Lagerplatz zumAusbuchen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
+		zumAusbuchen.belegung.setLagerplatz(null);
+		zumAusbuchen.setBelegung(null);
 
 	}
 
 	@Override
-	public void produktSuchen(int produktId) {
-
+	/**
+	 * Diese Methode macht ein Produkt mit der ProduktId ausfindig
+	 * 
+	 * @author Adrian
+	 * @param produktId
+	 */
+	public Produkt produktSuchen(int produktId) {
+		for (Produkt produkt : produktEingelagertListe) {
+			if (produkt.getProduktId() == produktId) {
+				return produkt;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -81,7 +109,7 @@ public class Konsole implements Lagerverwaltung {
 	public void alleGelagerteProdukte() {
 		System.out.println("****************************");
 		System.out.println("Waren im Lager:");
-		// IF STATE-ment falls lager leer
+		// IF-Statement falls Lager leer
 
 		if (produktEingelagertListe.isEmpty()) {
 			System.out.println("LEER");
@@ -95,7 +123,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Die Methode generiert eine einmalige Id fÃ¼r Proukte
+	 * Die Methode generiert eine einmalige Id fuer Produkte
 	 * 
 	 * @author Adrian
 	 */
@@ -183,7 +211,7 @@ public class Konsole implements Lagerverwaltung {
 	 * 
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		produktEinlesen("EinzulesendeDatei.txt",produktListe);
+		produktEinlesen("EinzulesendeDatei.txt", produktListe);
 		// Einstellungen Hauptmenu
 
 		int auswahlHauptMenu[] = { 1, 2, 3, 4, 5, 6 };

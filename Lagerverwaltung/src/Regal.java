@@ -1,6 +1,6 @@
 /**
  * 
- * @author adrianmuhleisen
+ * @author Adrian
  *
  */
 public class Regal {

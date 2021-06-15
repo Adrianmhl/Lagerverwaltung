@@ -1,12 +1,11 @@
-
+/**
+ * @author Adrian
+ */
 public class Produkt {
 
-	/**
-	 * @author isedo produktId --> jedes mal wenn ein produkt hinzugefuegt wird
-	 */
 	private String marke;
 	private String kategorie;
-
+	private Lagerplatz lagerplatz;
 	private static int zaehler = 0;
 	private int produktId;
 
@@ -14,6 +13,14 @@ public class Produkt {
 		this.produktId = produktId;
 		this.kategorie = kategorie;
 		this.marke = marke;
+	}
+
+	public Lagerplatz getLagerplatz() {
+		return lagerplatz;
+	}
+
+	public void setLagerplatz(Lagerplatz lagerplatz) {
+		this.lagerplatz = lagerplatz;
 	}
 
 	public Produkt(String kategorie, String marke) {
