@@ -68,13 +68,12 @@ public class Produkt {
 	 */
 
 	public String toString() {
-<<<<<<< HEAD
+
 		return "Marke=" + marke + ", Kategorie=" + kategorie;
 	}
 
 	public String toString2() {
-=======
->>>>>>> main
+
 		return "Produkt [Marke=" + marke + ", Kategorie=" + kategorie + ", ProduktId=" + produktId + "]";
 	}
 
