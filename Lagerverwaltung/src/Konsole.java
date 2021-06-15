@@ -223,10 +223,9 @@ public class Konsole implements Lagerverwaltung {
 					// Lager erstellen
 					if (lagerWaehlNr == auswahlLagerMenu[0]) {
 
-//						lagerIdListe.add(new Lager(idVergabe()));
-//						lagerIdListe.get(0).setLagerId(idVergabe());
-//
-//						System.out.println(lagerIdListe.get(0).toString());
+						lagerIdListe.add(new Lager(idVergabe()));
+//integer id; testen;;
+						System.out.println(lagerIdListe.get(0).toString());
 
 						int auswahlMenuRegal[] = { 1, 2, 3 };
 						String auswahlRegal[] = { "neuer Regal", "existierender Regal", "Exit" };
