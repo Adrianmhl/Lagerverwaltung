@@ -15,6 +15,13 @@ public class Produkt {
 		this.marke = marke;
 	}
 
+	public Produkt(String kategorie, String marke, int produktId, Lagerplatz lagerplatz) {
+		this.produktId = produktId;
+		this.kategorie = kategorie;
+		this.marke = marke;
+		this.lagerplatz = lagerplatz;
+	}
+
 	public Lagerplatz getLagerplatz() {
 		return lagerplatz;
 	}

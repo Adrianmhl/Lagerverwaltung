@@ -11,17 +11,13 @@ public class Lager {
 		return lagerId;
 	}
 
-	public void setLagerId(int lagerId) {
-		this.lagerId = lagerId;
-	}
-
 //	public int[] getListeDerIds() {
 //		return listeDerIds;
 //	}
 
 	@Override
 	public String toString() {
-		return "Lager [listeDerIds=" + lagerId + "]";
+		return "Lager [lagerId=" + lagerId + "]";
 	}
 
 }
