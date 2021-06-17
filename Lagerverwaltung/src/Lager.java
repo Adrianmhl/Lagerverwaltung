@@ -1,9 +1,9 @@
 public class Lager {
 	private int lagerId;
-	static Lager[] lager;
-//	int[] listeDerIds;
+	private String lagerName;
 
-	Lager(int lagerId) {
+	Lager(String name, int lagerId) {
+		this.lagerName = name;
 		this.lagerId = lagerId;
 	}
 
@@ -11,13 +11,9 @@ public class Lager {
 		return lagerId;
 	}
 
-//	public int[] getListeDerIds() {
-//		return listeDerIds;
-//	}
-
 	@Override
 	public String toString() {
-		return "Lager [lagerId=" + lagerId + "]";
+		return "Lager [lagerName=" + lagerName + "]";
 	}
 
 }

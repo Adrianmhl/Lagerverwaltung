@@ -96,6 +96,29 @@ public class Konsole implements Lagerverwaltung {
 		}
 	}
 
+	public static void logoEinlesen(String fileName) {
+
+		try {
+			FileReader fr = new FileReader(fileName);
+
+			int data = fr.read();
+			while (data != -1) {
+				System.out.print((char) data);
+				data = fr.read();
+			}
+			fr.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * @author isedo Produkte ausgeben (Inhalt)
 	 * @param produkt
@@ -139,7 +162,7 @@ public class Konsole implements Lagerverwaltung {
 	 * 
 	 */
 	public static void auswahlMenu(String nr[], int bezeichnung[]) {
-		System.out.println("M E N U - Logistica21");
+		System.out.println("MENU");
 		System.out.println("****************************");
 		for (int i = 0; i < nr.length; i++) {
 			System.out.printf("%d: %-15s \n", bezeichnung[i], nr[i]);
@@ -171,21 +194,30 @@ public class Konsole implements Lagerverwaltung {
 	/**
 	 * Überprüft zahl => gültig/nichtgültig
 	 */
-	public static int zahlInput(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
+	public static int consoleInput(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
 		// zahl.inputReader: überprüft Input (Menu Zahl)
-		return zahl.inputReader(eingabeText, eingabeErrorText, min, max);
+		return zahl.inputIntReader(eingabeText, eingabeErrorText, min, max);
 
 	}
 
-	public static int zahlInput(String eingabeText, String eingabeErrorText) throws IOException {
+	public static int consoleInput(String eingabeText, String eingabeErrorText) throws IOException {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
 		// zahl.inputReader: überprüft Input (Menu Zahl)
-		return zahl.inputReader(eingabeText, eingabeErrorText);
+		return zahl.inputIntReader(eingabeText, eingabeErrorText);
+
+	}
+
+	public static String consoleInput(String eingabeText) throws IOException {
+		// Input Onjekt erzeugen
+		Input zahl = new Input();
+
+		// zahl.inputReader: überprüft Input (Menu Zahl)
+		return zahl.inputStrReader(eingabeText);
 
 	}
 
@@ -203,13 +235,41 @@ public class Konsole implements Lagerverwaltung {
 		console.einlagern(produktID, lagerID);
 	}
 
-	public static void lagerErstellen() {
-		// max lager
-		int lagerID = idVergabe();
+	/**
+	 * 
+	 */
 
-		lagerIdListe.add(new Lager(lagerID));
+	public static void allRegaleAusgeben() {
+
+	}
+
+	/**
+	 * Lager Objekt wird erzeugt ; Ausgabe: Name, LagerID
+	 * 
+	 * 
+	 * @param name
+	 * @param id
+	 */
+
+	public static void lagerErstellen(String name, int id) {
+
+		lagerIdListe.add(new Lager(name, id));
 		System.out.println(lagerIdListe.get(0));
 
+	}
+
+	/**
+	 * Regal Objekt wird erzeugt
+	 * 
+	 * @param lagerId
+	 * @param regalBreite
+	 * @param regalHoehe
+	 */
+
+	public static void regalErstellen(int lagerId, int regalBreite, int regalHoehe) {
+
+		Regal tmp = new Regal(lagerId, regalBreite, regalHoehe);
+		System.out.println(tmp);
 	}
 
 	/**
@@ -229,208 +289,247 @@ public class Konsole implements Lagerverwaltung {
 	 * 
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
+
+		logoEinlesen("asciiArt.txt");
 		produktEinlesen("EinzulesendeDatei.txt", produktListe);
-		// Einstellungen Hauptmenu
 
-		int auswahlHauptMenu[] = { 0, 1, 2, 3, 4, 5 };
-		String auswahlMenu[] = { "Exit", "Lagerverwaltung", "Wareneingang", "Warenausgang", "Bestand", "Suche" };
-		int exitHauptmenu = auswahlHauptMenu[0];
+		System.out.println("Lager erstellen: y/n ");
+		String startEingabe = consoleInput("Eingabe:");
 
-		// Ausgabe: Hauptmenu
-		auswahlMenu(auswahlMenu, auswahlHauptMenu);
+		boolean bol = false;
 
-		int menuEingabe = zahlInput("Eingabe: ",
-				"Error: Bitte Zahl zwischen:" + auswahlHauptMenu[0] + " - "
-						+ auswahlHauptMenu[auswahlHauptMenu.length - 1],
-				auswahlHauptMenu[0], auswahlHauptMenu[auswahlHauptMenu.length - 1]);
+		do {
 
-		// Hauptmenu
-		while (menuEingabe != exitHauptmenu) {
+			switch (startEingabe) {
 
-			/**
-			 * Steurung: Lagerverwaltung
-			 */
-			if (menuEingabe == auswahlHauptMenu[1]) {
-				System.out.println("Lagerverwaltung ");
-				int auswahlLagerMenu[] = { 0, 1, 2 };
-				String auswahlLager[] = { "Exit", "Lager erstellen", "Liste Lager" };
+			case "n":
+				System.out.println("Wiedersehen!");
+				bol = true;
+				break;
+			case "y":
+				lagerErstellen(" vers. alpha ", 1000);
 
-				int exitLagerverwaltung = auswahlLagerMenu[0];
-				// Ausgabe: Lagermenu
-				auswahlMenu(auswahlLager, auswahlLagerMenu);
+				// Einstellungen Hauptmenu
 
-				int lagerEingabe = zahlInput("Eingabe: ",
-						"Error: Bitte Zahl zwischen:" + auswahlLagerMenu[0] + " - "
-								+ auswahlLagerMenu[auswahlLagerMenu.length - 1],
-						auswahlLagerMenu[0], auswahlLagerMenu[auswahlLagerMenu.length - 1]);
+				int auswahlHauptMenu[] = { 0, 1, 2, 3, 4, 5 };
+				String auswahlMenu[] = { "Exit", "Lagerverwaltung", "Wareneingang", "Warenausgang", "Bestand",
+						"Suche" };
+				int exitHauptmenu = auswahlHauptMenu[0];
 
-				while (lagerEingabe != exitLagerverwaltung) {
+				// Ausgabe: Hauptmenu
+				auswahlMenu(auswahlMenu, auswahlHauptMenu);
 
-					if (lagerEingabe == auswahlLagerMenu[1]) {
-						// Lagererstellen
-						System.out.println("Lager erstellt:  ");
-						lagerErstellen();
+				int menuEingabe = consoleInput("Eingabe: ",
+						"Error: Bitte Zahl zwischen:" + auswahlHauptMenu[0] + " - "
+								+ auswahlHauptMenu[auswahlHauptMenu.length - 1],
+						auswahlHauptMenu[0], auswahlHauptMenu[auswahlHauptMenu.length - 1]);
 
-					}
+				// Hauptmenu
+				while (menuEingabe != exitHauptmenu) {
 
-					// Lager wählen
-					if (lagerEingabe == auswahlLagerMenu[2]) {
-						System.out.println(lagerIdListe);
+					/**
+					 * Steurung: Lagerverwaltung
+					 */
+					if (menuEingabe == auswahlHauptMenu[1]) {
 
-					}
-					auswahlMenu(auswahlLager, auswahlLagerMenu);
+						System.out.println("Regale ");
+						int auswahlRegalMenu[] = { 0, 1, 2, 3 };
+						String auswahlRegal[] = { "Exit", "Regal erstellen", "Liste aller Regale", "Regal wählen" };
 
-					lagerEingabe = zahlInput("Eingabe: ",
-							"Error: Bitte Zahl zwischen:" + auswahlLagerMenu[0] + " - "
-									+ auswahlLagerMenu[auswahlLagerMenu.length - 1],
-							auswahlLagerMenu[0], auswahlLagerMenu[auswahlLagerMenu.length - 1]);
+						int exitRegalverwaltung = auswahlRegalMenu[0];
 
-				}
-				// Exit lagerverwaltung
-				System.out.println("EXIT LAGERVERWALTUNG");
-				System.out.println("****************************");
-			}
+						auswahlMenu(auswahlRegal, auswahlRegalMenu);
 
-			/**
-			 * Steurung: Produkt einlagern
-			 */
-			if (menuEingabe == auswahlHauptMenu[2]) {
+						int regalEingabe = consoleInput("Eingabe: ",
+								"Error: Bitte Zahl zwischen:" + auswahlRegalMenu[0] + " - "
+										+ auswahlRegalMenu[auswahlRegalMenu.length - 1],
+								auswahlRegalMenu[0], auswahlRegalMenu[auswahlRegalMenu.length - 1]);
 
-				int exitWareneingang = 0;
-				// Output Konsole, alle Produkte
-				System.out.println("Produkt zum einlagern wählen: ");
-				System.out.printf("%-15s %s \n", "Marke", "Kategorie");
-				// Ausgabe: Produktet aus .txt datei, Quelle --> Anfang main-methode
-				auswahlMenu(produktListe);
+						while (regalEingabe != exitRegalverwaltung) {
 
-				int produktEingabe = zahlInput("Eingabe: ",
-						"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(), 0,
-						produktListe.size());
+							if (regalEingabe == auswahlRegalMenu[1]) {
+								System.out.println("REGAL ERSTELLEN");
+								System.out.println("****************************");
 
-				while (produktEingabe != exitWareneingang) {
+								int regalHoeheEingabe = consoleInput("Höhe: ",
+										"Error: Bitte Zahl zwischen:" + 1 + " - " + 10, 1, 10);
+								System.out.println("****************************");
 
-					if (produktEingabe < produktListe.size()) {
-						gewaehltesProduktConsoleAusgabe(produktEingabe - 1, produktListe);
+								int regalBreiteEingabe = consoleInput("Breite: ",
+										"Error: Bitte Zahl zwischen:" + 1 + " - " + 10, 1, 10);
 
-					}
-				}
-				System.out.println("EXIT WARENEINGANG");
-				System.out.println("****************************");
+								regalErstellen(lagerIdListe.get(0).getLagerId(), regalHoeheEingabe, regalBreiteEingabe);
+							}
 
-			}
-			/**
-			 * Steuerung: Warenausgang ausgeben
-			 */
+							if (regalEingabe == auswahlRegalMenu[2]) {
+								System.out.println("LISTE ALLER REGALE");
 
-			else if (menuEingabe == auswahlHauptMenu[3]) {
+							}
 
-				System.out.println("SUCHE ");
-				int auswahlAusbuchenNr[] = { 0, 1 };
-				String auswahlAusbuchenMenu[] = { "Exit", "ID Eingabe" };
+							// Lager wählen
+							if (regalEingabe == auswahlRegalMenu[2]) {
+								System.out.println("REGAL WÄHLEN");
 
-				int exitAusbuchen = auswahlAusbuchenNr[0];
-				// Ausgabe: Lagermenu
-				auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr);
+							}
 
-				int ausbuchenEingabe = zahlInput("Eingabe: ",
-						"Error: Bitte Zahl zwischen:" + auswahlAusbuchenNr[0] + " - "
-								+ auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1],
-						auswahlAusbuchenNr[0], auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1]);
+							auswahlMenu(auswahlRegal, auswahlRegalMenu);
+							regalEingabe = consoleInput("Eingabe: ",
+									"Error: Bitte Zahl zwischen:" + auswahlRegalMenu[0] + " - "
+											+ auswahlRegalMenu[auswahlRegalMenu.length - 1],
+									auswahlRegalMenu[0], auswahlRegalMenu[auswahlRegalMenu.length - 1]);
 
-				while (ausbuchenEingabe != exitAusbuchen) {
-
-					if (ausbuchenEingabe == auswahlAusbuchenNr[1]) {
-
-						int sucheIdEingabe = zahlInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
-
-						if (console.produktSuchen(sucheIdEingabe) == null) {
-							System.out.println("Nicht im Lager");
-
-						} else {
-							console.produktSuchen(sucheIdEingabe);
 						}
 
+						System.out.println("Exit Lagerverwaltung");
+
 					}
 
-					auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr);
+					/**
+					 * Steurung: Produkt einlagern
+					 */
+					if (menuEingabe == auswahlHauptMenu[2]) {
 
-					ausbuchenEingabe = zahlInput("Eingabe: ",
-							"Error: Bitte Zahl zwischen:" + auswahlAusbuchenNr[0] + " - "
-									+ auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1],
-							auswahlAusbuchenNr[0], auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1]);
+						int exitWareneingang = 0;
+						// Output Konsole, alle Produkte
+						System.out.println("Produkt zum einlagern wählen: ");
+						System.out.printf("%-15s %s \n", "Marke", "Kategorie");
+						// Ausgabe: Produktet aus .txt datei, Quelle --> Anfang main-methode
+						auswahlMenu(produktListe);
 
-				}
+						int produktEingabe = consoleInput("Eingabe: ",
+								"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(), 0,
+								produktListe.size());
 
-				System.out.println("EXIT: AUSBUCHEN");
-				// quit
-			}
-			/**
-			 * Steuerung: Bestand ausgeben
-			 */
+						while (produktEingabe != exitWareneingang) {
 
-			else if (menuEingabe == auswahlHauptMenu[4]) {
-				alleGelagerteProdukte();
-			}
+							if (produktEingabe < produktListe.size()) {
+								gewaehltesProduktConsoleAusgabe(produktEingabe - 1, produktListe);
 
-			/**
-			 * Steuerungg: Produkt suche
-			 */
+							}
+						}
+						System.out.println("EXIT WARENEINGANG");
+						System.out.println("****************************");
 
-			else if (menuEingabe == auswahlHauptMenu[5]) {
+					}
+					/**
+					 * Steuerung: Warenausgang ausgeben
+					 */
 
-				System.out.println("SUCHE ");
-				int auswahlSucheNr[] = { 0, 1 };
-				String auswahlSucheMenu[] = { "Exit", "ID Eingabe" };
+					else if (menuEingabe == auswahlHauptMenu[3]) {
 
-				int exitSuche = auswahlSucheNr[0];
-				// Ausgabe: Lagermenu
-				auswahlMenu(auswahlSucheMenu, auswahlSucheNr);
+						System.out.println("SUCHE ");
+						int auswahlAusbuchenNr[] = { 0, 1 };
+						String auswahlAusbuchenMenu[] = { "Exit", "ID Eingabe" };
 
-				int sucheEingabe = zahlInput("Eingabe: ",
-						"Error: Bitte Zahl zwischen:" + auswahlSucheNr[0] + " - "
-								+ auswahlSucheNr[auswahlSucheNr.length - 1],
-						auswahlSucheNr[0], auswahlSucheNr[auswahlSucheNr.length - 1]);
+						int exitAusbuchen = auswahlAusbuchenNr[0];
+						// Ausgabe: Lagermenu
+						auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr);
 
-				while (sucheEingabe != exitSuche) {
+						int ausbuchenEingabe = consoleInput("Eingabe: ",
+								"Error: Bitte Zahl zwischen:" + auswahlAusbuchenNr[0] + " - "
+										+ auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1],
+								auswahlAusbuchenNr[0], auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1]);
 
-					if (sucheEingabe == auswahlSucheNr[1]) {
+						while (ausbuchenEingabe != exitAusbuchen) {
 
-						int sucheIdEingabe = zahlInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
+							if (ausbuchenEingabe == auswahlAusbuchenNr[1]) {
 
-						if (console.produktSuchen(sucheIdEingabe) == null) {
-							System.out.println("Nicht im Lager");
+								int sucheIdEingabe = consoleInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
 
-						} else {
-							console.produktSuchen(sucheIdEingabe);
+								if (console.produktSuchen(sucheIdEingabe) == null) {
+									System.out.println("Nicht im Lager");
+
+								} else {
+									console.produktSuchen(sucheIdEingabe);
+								}
+
+							}
+
+							auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr);
+
+							ausbuchenEingabe = consoleInput("Eingabe: ",
+									"Error: Bitte Zahl zwischen:" + auswahlAusbuchenNr[0] + " - "
+											+ auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1],
+									auswahlAusbuchenNr[0], auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1]);
+
 						}
 
+						System.out.println("EXIT: AUSBUCHEN");
+						// quit
+					}
+					/**
+					 * Steuerung: Bestand ausgeben
+					 */
+
+					else if (menuEingabe == auswahlHauptMenu[4]) {
+						alleGelagerteProdukte();
 					}
 
-					auswahlMenu(auswahlSucheMenu, auswahlSucheNr);
+					/**
+					 * Steuerungg: Produkt suche
+					 */
 
-					sucheEingabe = zahlInput("Eingabe: ",
-							"Error: Bitte Zahl zwischen:" + auswahlSucheNr[0] + " - "
-									+ auswahlSucheNr[auswahlSucheNr.length - 1],
-							auswahlSucheNr[0], auswahlSucheNr[auswahlSucheNr.length - 1]);
+					else if (menuEingabe == auswahlHauptMenu[5]) {
+
+						System.out.println("SUCHE ");
+						int auswahlSucheNr[] = { 0, 1 };
+						String auswahlSucheMenu[] = { "Exit", "ID Eingabe" };
+
+						int exitSuche = auswahlSucheNr[0];
+						// Ausgabe: Lagermenu
+						auswahlMenu(auswahlSucheMenu, auswahlSucheNr);
+
+						int sucheEingabe = consoleInput("Eingabe: ",
+								"Error: Bitte Zahl zwischen:" + auswahlSucheNr[0] + " - "
+										+ auswahlSucheNr[auswahlSucheNr.length - 1],
+								auswahlSucheNr[0], auswahlSucheNr[auswahlSucheNr.length - 1]);
+
+						while (sucheEingabe != exitSuche) {
+
+							if (sucheEingabe == auswahlSucheNr[1]) {
+
+								int sucheIdEingabe = consoleInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
+
+								if (console.produktSuchen(sucheIdEingabe) == null) {
+									System.out.println("Nicht im Lager");
+
+								} else {
+									console.produktSuchen(sucheIdEingabe);
+								}
+
+							}
+
+							auswahlMenu(auswahlSucheMenu, auswahlSucheNr);
+
+							sucheEingabe = consoleInput("Eingabe: ",
+									"Error: Bitte Zahl zwischen:" + auswahlSucheNr[0] + " - "
+											+ auswahlSucheNr[auswahlSucheNr.length - 1],
+									auswahlSucheNr[0], auswahlSucheNr[auswahlSucheNr.length - 1]);
+						}
+
+						System.out.println("EXIT: SUCHE");
+						// quit
+					}
+					/**
+					 * Schleife, zurück ins Hauptmenu
+					 */
+
+					auswahlMenu(auswahlMenu, auswahlHauptMenu);
+					menuEingabe = consoleInput("Eingabe: ",
+							"Error: Bitte Zahl zwischen: " + auswahlHauptMenu[0] + " - "
+									+ auswahlHauptMenu[auswahlHauptMenu.length - 1],
+							auswahlHauptMenu[0], auswahlHauptMenu[auswahlHauptMenu.length - 1]);
+
 				}
 
-				System.out.println("EXIT: SUCHE");
-				// quit
+				System.out.println("Wiedersehen!");
+				bol = true;
+				break;
+
+			default:
+				System.out.println(("y/n"));
+				startEingabe = consoleInput("Eingabe:");
 			}
-			/**
-			 * Schleife, zurück ins Hauptmenu
-			 */
-
-			auswahlMenu(auswahlMenu, auswahlHauptMenu);
-			menuEingabe = zahlInput("Eingabe: ",
-					"Error: Bitte Zahl zwischen: " + auswahlHauptMenu[0] + " - "
-							+ auswahlHauptMenu[auswahlHauptMenu.length - 1],
-					auswahlHauptMenu[0], auswahlHauptMenu[auswahlHauptMenu.length - 1]);
-
-		}
-		System.out.println("EXIT: Logistica21 ");
-		System.out.println("****************************");
-
+		} while (bol == false);
 	}
-
 }
