@@ -8,7 +8,7 @@ public class Lagerplatz {
 	private int regalId;// Id des Regals für diesen Lagerplatz
 	private int lagerplatzId;// Id des Lagerplatzs
 	Produkt belegung;// Der Ihnahlt des Lagerplatzs
-	static Lagerplatz[] lagerplaetze;// Auflistung aller Lagerplätze
+	static Lagerplatz[] lagerplaetze= new Lagerplatz[1000];// Auflistung aller Lagerplätze
 
 	/**
 	 * Dieser Konstruktor erstellein neuen Lagerplatz
@@ -21,10 +21,10 @@ public class Lagerplatz {
 		this.regalId = regalId;
 		this.lagerplatzId = Integer.parseInt(
 				Integer.toString(regalId) + Integer.toString(vertikalerPlatz) + Integer.toString(horizontalerPlatz));
-		if (lagerplaetze != null) {
+		if (lagerplaetze == null) {
 			lagerplaetze[0] = this;
 		} else {
-			lagerplaetze[lagerplaetze.length + 1] = this;
+			lagerplaetze[lagerplaetze.length-1] = this;
 		}
 
 	}

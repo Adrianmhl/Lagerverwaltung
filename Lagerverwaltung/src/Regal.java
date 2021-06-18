@@ -9,8 +9,8 @@ public class Regal {
 	private int regalBreite;// Hat die Einheit Lagerplatz
 	private int regalHoehe;// Hat die Einheit Lagerplatz
 	int anzahlRegale; // Anzahl aller Regale
-	Regal[] regale; // Auflistung aller Regale
-	Lagerplatz[][][] lagerplaetze; // Lagerplätze [regalId] [Spalte] [Reihe]
+	Regal[] regale= new Regal[15]; // Auflistung aller Regale
+	Lagerplatz[][][] lagerplaetze= new Lagerplatz[1500][100][100]; // Lagerplätze [regalId] [Spalte] [Reihe]
 
 	/**
 	 * Der Konstruktor erzeigt ein neues Regal und dessen Lagerplätze Die
@@ -32,10 +32,10 @@ public class Regal {
 		this.regalId = Integer.parseInt(Integer.toString(lagerId) + Integer.toString(anzahlRegale));
 
 		// Erzeugtes Regal in Array regale stecken
-		if (regale != null) {
+		if (regale == null) {
 			regale[0] = this;
 		} else {
-			regale[regale.length] = this;
+			regale[anzahlRegale-1] = this;
 		}
 
 		// Die neuen Lagerplätze erzeugen und direkt in Array lagerplaetze stecken

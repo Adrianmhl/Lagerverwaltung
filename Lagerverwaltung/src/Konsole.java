@@ -307,7 +307,7 @@ public class Konsole implements Lagerverwaltung {
 				bol = true;
 				break;
 			case "y":
-				lagerErstellen(" vers. alpha ", 1000);
+				lagerErstellen(" vers. alpha ", 10);
 
 				// Einstellungen Hauptmenu
 
