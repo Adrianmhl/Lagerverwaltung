@@ -57,9 +57,14 @@ public class Konsole implements Lagerverwaltung {
 	 */
 	@Override
 	public Produkt produktSuchen(int produktId) {
-		for (Produkt produkt : produktEingelagertListe) {
-			if (produkt.getProduktId() == produktId) {
-				return produkt;
+		if (Produkt.produkte.length == 0) {
+			System.err.print("Es existiert noch kein Produkt!");
+			return null;
+		}else {
+			for (int i = Produkt.produkte.length; i > 0; i--) {
+				if (Produkt.produkte[i - 1] != null && Produkt.produkte[i - 1].getProduktId() ==  produktId) {
+					return Produkt.produkte[i - 1];
+				}
 			}
 		}
 		return null;
@@ -226,13 +231,16 @@ public class Konsole implements Lagerverwaltung {
 	 * 
 	 */
 	public static void produktEinlagern(Produkt katgMarke) {
-
+		int lagerplatzID = 0;
 		// Lagerplatz
-		int produktID = idVergabe();
-		produktEingelagertListe.add(new Produkt(katgMarke.getMarke(), katgMarke.getKategorie(), produktID));
-		int lagerID = lagerIdListe.get(0).getLagerId();
-		System.out.println(lagerID);
-		console.einlagern(produktID, lagerID);
+		produktEingelagertListe.add(new Produkt(katgMarke.getMarke(), katgMarke.getKategorie(), katgMarke.getProduktId()));
+		for (int i = Lagerplatz.lagerplaetze.length; i > 0; i--) {
+			if (Lagerplatz.lagerplaetze[i - 1] != null && Lagerplatz.lagerplaetze[i - 1].getBelegung() ==  null) {
+				lagerplatzID = Lagerplatz.lagerplaetze[i - 1].getLagerplatzId();
+			}
+		System.out.println(lagerplatzID);
+		console.einlagern(katgMarke.getProduktId(), lagerplatzID);
+		}
 	}
 
 	/**
@@ -279,7 +287,8 @@ public class Konsole implements Lagerverwaltung {
 
 	private static void gewaehltesProduktConsoleAusgabe(int produktWahlNr, List<Produkt> produkt) {
 		Produkt katgMarke = produkt.get(produktWahlNr);
-		produktEinlagern(katgMarke);
+		int neueId=idVergabe();
+		produktEinlagern(new Produkt (katgMarke.getKategorie(),katgMarke.getMarke(),neueId));
 		System.out.println("Produkt eingelagert:");
 		System.out.printf("%-10s %s\n", katgMarke.getMarke(), katgMarke.getKategorie());
 	}

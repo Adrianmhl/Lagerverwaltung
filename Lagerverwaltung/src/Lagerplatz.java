@@ -8,7 +8,7 @@ public class Lagerplatz {
 	private int regalId;// Id des Regals für diesen Lagerplatz
 	private int lagerplatzId;// Id des Lagerplatzs
 	Produkt belegung;// Der Ihnahlt des Lagerplatzs
-	static Lagerplatz[] lagerplaetze= new Lagerplatz[1000];// Auflistung aller Lagerplätze
+	static Lagerplatz[] lagerplaetze = new Lagerplatz[1000];// Auflistung aller Lagerplätze
 
 	/**
 	 * Dieser Konstruktor erstellein neuen Lagerplatz
@@ -24,7 +24,7 @@ public class Lagerplatz {
 		if (lagerplaetze == null) {
 			lagerplaetze[0] = this;
 		} else {
-			lagerplaetze[lagerplaetze.length-1] = this;
+			lagerplaetze[lagerplaetze.length - 1] = this;
 		}
 
 	}
@@ -37,13 +37,20 @@ public class Lagerplatz {
 	 * @return
 	 */
 	public static Lagerplatz lagerplatzSuchen(int lagerplatzId) {
-
-		for (int i = lagerplaetze.length; i > 0; i--) {
-			if (lagerplaetze[i - 1].lagerplatzId == lagerplatzId) {
-				return lagerplaetze[i - 1];
+		if (Lagerplatz.lagerplaetze == null) {
+			System.err.print("Es existiert noch kein Lagerplatz, bitte ein Regal erstellen!");
+			return null;
+		}else {
+			for (int i = Lagerplatz.lagerplaetze.length; i > 0; i--) {
+				if (Lagerplatz.lagerplaetze[i - 1] != null && Lagerplatz.lagerplaetze[i - 1].lagerplatzId ==  lagerplatzId) {
+					return Lagerplatz.lagerplaetze[i - 1];
+				}
 			}
 		}
 		return null;
+			
+		
+		
 	}
 
 	public int getRegalId() {
@@ -69,5 +76,5 @@ public class Lagerplatz {
 	public void setBelegung(Produkt belegung) {
 		this.belegung = belegung;
 	}
-	
+
 }
