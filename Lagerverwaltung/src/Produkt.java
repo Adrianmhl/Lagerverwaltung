@@ -8,7 +8,7 @@ public class Produkt {
 	private Lagerplatz lagerplatz;
 	private static int zaehler = 0;
 	private int produktId;
-	int anzahlProdukte; // Anzahl aller Produkte
+	static int anzahlProdukte; // Anzahl aller Produkte
 	static Produkt[] produkte = new Produkt[60]; // Auflistung aller Produkte
 
 	public Produkt(String kategorie, String marke, int produktId) {
@@ -54,14 +54,6 @@ public class Produkt {
 		this.marke = marke;
 	}
 
-	public int getproduktId() {
-		return produktId;
-	}
-
-	public void setproduktId(int id) {
-		this.produktId = id;
-	}
-
 	public String getKategorie() {
 		return kategorie;
 	}
@@ -86,19 +78,13 @@ public class Produkt {
 		this.produktId = produktId;
 	}
 
-	@Override
 	/**
 	 * Lässt die Attribute der Klasse Produkte als String ausgeben
 	 */
-
+	@Override
 	public String toString() {
-
-		return "Marke=" + marke + ", Kategorie=" + kategorie;
-	}
-
-	public String toString2() {
-
-		return "Produkt [Marke=" + marke + ", Kategorie=" + kategorie + ", ProduktId=" + produktId + "]";
+		return "Produkt [marke=" + marke + ", kategorie=" + kategorie + ", lagerplatz=" + lagerplatz + ", produktId="
+				+ produktId + ", anzahlProdukte=" + anzahlProdukte + "]";
 	}
 
 }
