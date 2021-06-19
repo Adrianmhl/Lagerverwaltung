@@ -8,8 +8,8 @@ public class Produkt {
 	private Lagerplatz lagerplatz;
 	private static int zaehler = 0;
 	private int produktId;
-	int anzahlProdukte; // Anzahl aller Regale
-	static Produkt[]produkte= new Produkt[60]; // Auflistung aller Regale
+	int anzahlProdukte; // Anzahl aller Produkte
+	static Produkt[] produkte = new Produkt[60]; // Auflistung aller Produkte
 
 	public Produkt(String kategorie, String marke, int produktId) {
 		anzahlProdukte++;
@@ -25,11 +25,11 @@ public class Produkt {
 		this.marke = marke;
 		this.lagerplatz = lagerplatz;
 		// Erzeugtes Produkt in Array regale stecken
-				if (produkte == null) {
-					produkte[0] = this;
-				} else {
-					produkte[anzahlProdukte-1] = this;
-				}
+		if (produkte == null) {
+			produkte[0] = this;
+		} else {
+			produkte[anzahlProdukte - 1] = this;
+		}
 	}
 
 	public Lagerplatz getLagerplatz() {

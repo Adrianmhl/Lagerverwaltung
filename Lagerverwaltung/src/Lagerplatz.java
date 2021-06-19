@@ -8,7 +8,7 @@ public class Lagerplatz {
 	private int regalId;// Id des Regals für diesen Lagerplatz
 	private int lagerplatzId;// Id des Lagerplatzs
 	Produkt belegung;// Der Ihnahlt des Lagerplatzs
-	static Lagerplatz[] lagerplaetze = new Lagerplatz[1000];// Auflistung aller Lagerplätze
+	static Lagerplatz[] lagerplaetze = new Lagerplatz[20];// Auflistung aller Lagerplätze
 
 	/**
 	 * Dieser Konstruktor erstellein neuen Lagerplatz
@@ -40,17 +40,16 @@ public class Lagerplatz {
 		if (Lagerplatz.lagerplaetze == null) {
 			System.err.print("Es existiert noch kein Lagerplatz, bitte ein Regal erstellen!");
 			return null;
-		}else {
+		} else {
 			for (int i = Lagerplatz.lagerplaetze.length; i > 0; i--) {
-				if (Lagerplatz.lagerplaetze[i - 1] != null && Lagerplatz.lagerplaetze[i - 1].lagerplatzId ==  lagerplatzId) {
+				if (Lagerplatz.lagerplaetze[i - 1] != null
+						&& Lagerplatz.lagerplaetze[i - 1].lagerplatzId == lagerplatzId) {
 					return Lagerplatz.lagerplaetze[i - 1];
 				}
 			}
 		}
 		return null;
-			
-		
-		
+
 	}
 
 	public int getRegalId() {
