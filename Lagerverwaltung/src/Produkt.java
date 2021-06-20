@@ -1,3 +1,4 @@
+
 /**
  * @author Adrian
  */
@@ -12,7 +13,7 @@ public class Produkt {
 	static Produkt[] produkte = new Produkt[60]; // Auflistung aller Produkte
 
 	public Produkt(String kategorie, String marke, int produktId) {
-		anzahlProdukte++;
+
 		this.produktId = produktId;
 		this.kategorie = kategorie;
 		this.marke = marke;
@@ -24,13 +25,24 @@ public class Produkt {
 		this.kategorie = kategorie;
 		this.marke = marke;
 		this.lagerplatz = lagerplatz;
-		// Erzeugtes Produkt in Array regale stecken
-		if (produkte == null) {
-			produkte[0] = this;
-		} else {
-			produkte[anzahlProdukte - 1] = this;
+
+		for (int i = 0; i < produkte.length; i++) {
+
+			if (produkte[i] == null) {
+				produkte[i] = this;
+				System.out.println(produkte[i]);
+				break;
+			}
+
 		}
 	}
+	// Erzeugtes Produkt in Array regale stecken
+//		if (produkte == null) {
+//			produkte[0] = this;
+//		} else {
+//			produkte[anzahlProdukte - 1] = this;
+//		}
+//	}
 
 	public Lagerplatz getLagerplatz() {
 		return lagerplatz;

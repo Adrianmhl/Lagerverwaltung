@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,23 +20,7 @@ public class Konsole implements Lagerverwaltung {
 	static int ids[];
 
 	/**
-	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein
-	 * 
-	 * @author Adrian
-	 * @param lagerplatzId
-	 * @param produktId
-	 */
-	@Override
-	public void einlagern(int lagerplatzId, int produktId) {
-		Produkt zurEinlagerung = produktSuchen(produktId);
-		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
-		zurEinlagerung.setLagerplatz(zuBelegen);
-		zuBelegen.setBelegung(zurEinlagerung);
-
-	}
-
-	/**
-	 * Diese Methode löscht die belegung des Lagerplatzs und den lagerplatz des
+	 * Diese Methode lÃ¶scht die belegung des Lagerplatzs und den lagerplatz des
 	 * Produkts
 	 * 
 	 * @author Adrian
@@ -44,7 +29,7 @@ public class Konsole implements Lagerverwaltung {
 	@Override
 	public void ausbuchen(int lagerplatzId) {
 		Lagerplatz zumAusbuchen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
-		zumAusbuchen.belegung.setLagerplatz(null);
+		zumAusbuchen.getBelegung().setLagerplatz(null);
 		zumAusbuchen.setBelegung(null);
 
 	}
@@ -59,7 +44,9 @@ public class Konsole implements Lagerverwaltung {
 	public Produkt produktSuchen(int produktId) {
 
 		for (int i = 0; i < Produkt.produkte.length; i++) {
-			if (produktId == Produkt.produkte[i].getProduktId() && Produkt.produkte[i] != null) {
+			if (produktId == Produkt.produkte[i].getProduktId()) {
+
+				System.out.println("Produkt.produkte[i] hat funktioniert" + Produkt.produkte[i]);
 				return Produkt.produkte[i];
 
 			}
@@ -194,13 +181,13 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Überprüft zahl => gültig/nichtgültig
+	 * ÃœberprÃ¼ft zahl => gÃ¼ltig/nichtgÃ¼ltig
 	 */
 	public static int consoleInput(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
-		// zahl.inputReader: überprüft Input (Menu Zahl)
+		// zahl.inputReader: Ã¼berprÃ¼ft Input (Menu Zahl)
 		return zahl.inputIntReader(eingabeText, eingabeErrorText, min, max);
 
 	}
@@ -209,7 +196,7 @@ public class Konsole implements Lagerverwaltung {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
-		// zahl.inputReader: überprüft Input (Menu Zahl)
+		// zahl.inputReader: Ã¼berprÃ¼ft Input (Menu Zahl)
 		return zahl.inputIntReader(eingabeText, eingabeErrorText);
 
 	}
@@ -218,7 +205,7 @@ public class Konsole implements Lagerverwaltung {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
-		// zahl.inputReader: überprüft Input (Menu Zahl)
+		// zahl.inputReader: Ã¼berprÃ¼ft Input (Menu Zahl)
 		return zahl.inputStrReader(eingabeText);
 
 	}
@@ -227,14 +214,14 @@ public class Konsole implements Lagerverwaltung {
 	 * gewaehltes Produkt wird in Liste "produktEingelagertListe" gespeichert
 	 * 
 	 */
-	public static void produktEinlagern(Produkt produkt) {
-		int lagerplatzID = 0;
-		// Lagerplatz
-		produktEingelagertListe.add(produkt);
-
-		System.out.println(lagerplatzID);
-		console.einlagern(produkt.getProduktId(), lagerplatzID);
-	}
+//	public static void produktEinlagern(Produkt produkt) {
+//		int lagerplatzID = 0;
+//		// Lagerplatz
+//		produktEingelagertListe.add(produkt);
+//
+//		System.out.println(lagerplatzID);
+//		console.einlagern(produkt.getProduktId(), lagerplatzID);
+//	}
 
 	/**
 	 * 
@@ -268,38 +255,79 @@ public class Konsole implements Lagerverwaltung {
 	 */
 
 	public static void regalErstellen(int lagerId, int regalBreite, int regalHoehe) {
+		Regal tmp = null;
+		tmp = new Regal(lagerId, regalBreite, regalHoehe);
+		System.out.println("1" + tmp);
+		System.out.println("2" + "Anzahl Regale :" + tmp.getAnzahlRegale());
+		System.out.println("3" + "Lagerplatz length: " + Lagerplatz.alleLagerplaetze.toString());
+	}
 
-		Regal tmp = new Regal(lagerId, regalBreite, regalHoehe);
-		System.out.println(tmp);
+	public static int lagerplatzIdSuchen() {
+
+		for (int i = 0; i < Lagerplatz.alleLagerplaetze.length; i++) {
+			if (Lagerplatz.alleLagerplaetze[i] != null && Lagerplatz.alleLagerplaetze[i].getBelegung() == null) {
+				int lagerplatzId = Lagerplatz.alleLagerplaetze[i].getLagerplatzId();
+				System.out.println("laggerplatzId hat funktioniert" + lagerplatzId);
+				return lagerplatzId;
+			}
+		}
+		return 0;
+
 	}
 
 	/**
-	 * Gibt ausgewähltes Produkt in der Konsole aus, (vllt. mit Methode
+	 * Gibt ausgewÃ¤hltes Produkt in der Konsole aus, (vllt. mit Methode
 	 * produktEinlagern verbinden)
 	 */
 
 	private static void gewaehltesProduktConsoleAusgabe(int produktWahlNr, List<Produkt> produktlist) {
-		Produkt produkt = produktlist.get(produktWahlNr);
+		Produkt produkttmp = produktlist.get(produktWahlNr);
 
+		int produktId = idVergabe();
+		produkttmp.setProduktId(produktId);
+
+		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzIdSuchen());
+
+		System.out.println("zuBelegen hat funktioniert : " + zuBelegen);
+
+		Produkt produkt = new Produkt(produkttmp.getKategorie(), produkttmp.getMarke(), produkttmp.getProduktId(),
+				zuBelegen);
+
+		einlagern2(produkt, zuBelegen);
+
+	}
+
+	/**
+	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein
+	 * 
+	 * @author Adrian
+	 * @param lagerplatzId
+	 * @param produktId
+	 */
+	public static void einlagern2(Produkt produkt, Lagerplatz zuBelegen) {
+
+		Produkt produktZurEinlagerung = console.produktSuchen(produkt.getProduktId());
+
+		produktZurEinlagerung.setLagerplatz(zuBelegen);
+
+		zuBelegen.setBelegung(produktZurEinlagerung);
 		System.out.println(produkt);
-		int neueId = idVergabe();
-		produkt.setProduktId(neueId);
+	}
 
-		int lagerplatzID = 0;
-		for (int i = Lagerplatz.lagerplaetze.length; i > 0; i--) {
-			if (Lagerplatz.lagerplaetze[i - 1] != null && Lagerplatz.lagerplaetze[i - 1].getBelegung() == null) {
-				lagerplatzID = Lagerplatz.lagerplaetze[i - 1].getLagerplatzId();
-			}
-		}
+	/**
+	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein
+	 * 
+	 * @author Adrian
+	 * @param lagerplatzId
+	 * @param produktId
+	 */
+	@Override
+	public void einlagern(int lagerplatzId, int produktId) {
+		Produkt zurEinlagerung = produktSuchen(produktId);
+		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
+		zurEinlagerung.setLagerplatz(zuBelegen);
+		zuBelegen.setBelegung(zurEinlagerung);
 
-		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzID);
-
-		Produkt produktTmp = new Produkt(produkt.getKategorie(), produkt.getMarke(), neueId, zuBelegen);
-		System.out.println(produktTmp);
-
-//		produktEinlagern(produkt);
-//		System.out.println("Produkt eingelagert:");
-//		System.out.printf("%-10s %s\n", produkt.getMarke(), produkt.getKategorie());
 	}
 
 	/**
@@ -352,7 +380,7 @@ public class Konsole implements Lagerverwaltung {
 
 						System.out.println("Regale ");
 						int auswahlRegalMenu[] = { 0, 1, 2, 3 };
-						String auswahlRegal[] = { "Exit", "Regal erstellen", "Liste aller Regale", "Regal wählen" };
+						String auswahlRegal[] = { "Exit", "Regal erstellen", "Liste aller Regale", "Regal wÃ¤hlen" };
 
 						int exitRegalverwaltung = auswahlRegalMenu[0];
 
@@ -369,7 +397,7 @@ public class Konsole implements Lagerverwaltung {
 								System.out.println("REGAL ERSTELLEN");
 								System.out.println("****************************");
 
-								int regalHoeheEingabe = consoleInput("Höhe: ",
+								int regalHoeheEingabe = consoleInput("HÃ¶he: ",
 										"Error: Bitte Zahl zwischen:" + 1 + " - " + 10, 1, 10);
 								System.out.println("****************************");
 
@@ -384,9 +412,9 @@ public class Konsole implements Lagerverwaltung {
 
 							}
 
-							// Lager wählen
+							// Lager wÃ¤hlen
 							if (regalEingabe == auswahlRegalMenu[2]) {
-								System.out.println("REGAL WÄHLEN");
+								System.out.println("REGAL WÃ„HLEN");
 
 							}
 
@@ -409,7 +437,7 @@ public class Konsole implements Lagerverwaltung {
 
 						int exitWareneingang = 0;
 						// Output Konsole, alle Produkte
-						System.out.println("Produkt zum einlagern wählen: ");
+						System.out.println("Produkt zum einlagern wÃ¤hlen: ");
 						System.out.printf("%-15s %s \n", "Marke", "Kategorie");
 						// Ausgabe: Produktet aus .txt datei, Quelle --> Anfang main-methode
 						auswahlMenu(produktListe);
@@ -485,7 +513,7 @@ public class Konsole implements Lagerverwaltung {
 					 */
 
 					else if (menuEingabe == auswahlHauptMenu[4]) {
-						alleGelagerteProdukte();
+						System.out.println(" IMPLEMENTIEREN!!");
 					}
 
 					/**
@@ -534,7 +562,7 @@ public class Konsole implements Lagerverwaltung {
 						// quit
 					}
 					/**
-					 * Schleife, zurück ins Hauptmenu
+					 * Schleife, zurÃ¼ck ins Hauptmenu
 					 */
 
 					auswahlMenu(auswahlMenu, auswahlHauptMenu);

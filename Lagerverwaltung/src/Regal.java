@@ -1,3 +1,4 @@
+
 /**
  * 
  * @author Adrian
@@ -8,9 +9,9 @@ public class Regal {
 	private int regalId;// Zusammengesetzt aus lagerId+ Regalnummer(aufsteigent gezählt)
 	private int regalBreite;// Hat die Einheit Lagerplatz
 	private int regalHoehe;// Hat die Einheit Lagerplatz
-	int anzahlRegale; // Anzahl aller Regale
-	Regal[] regale= new Regal[15]; // Auflistung aller Regale
-	Lagerplatz[][][] lagerplaetze= new Lagerplatz[1500][100][100]; // Lagerplätze [regalId] [Spalte] [Reihe]
+	static int anzahlRegale; // Anzahl aller Regale
+	static Regal[] regale = new Regal[5]; // Auflistung aller Regale
+	Lagerplatz[][][] lagerplaetze = new Lagerplatz[1500][100][100]; // Lagerplätze [regalId] [Spalte] [Reihe]
 
 	/**
 	 * Der Konstruktor erzeigt ein neues Regal und dessen Lagerplätze Die
@@ -32,10 +33,16 @@ public class Regal {
 		this.regalId = Integer.parseInt(Integer.toString(lagerId) + Integer.toString(anzahlRegale));
 
 		// Erzeugtes Regal in Array regale stecken
-		if (regale == null) {
-			regale[0] = this;
-		} else {
-			regale[anzahlRegale-1] = this;
+
+		for (int i = 0; i < regale.length; i++) {
+			if (regale[i] == null) {
+				regale[i] = this;
+
+				System.out.println("this" + this);
+				System.out.println("anzahl runden" + i);
+				break;
+			}
+
 		}
 
 		// Die neuen Lagerplätze erzeugen und direkt in Array lagerplaetze stecken
@@ -43,7 +50,7 @@ public class Regal {
 			for (int l = regalHoehe; l > 0; l--) {
 				lagerplaetze[this.regalId][i][l] = new Lagerplatz(this.regalId, i, l); // lagerplaetze [0][0] bleibt
 																						// frei, dafür sind die Nummern
-																						// gleich
+				System.out.println(lagerplaetze[this.regalId][i][l]); // gleich
 			}
 
 		}
@@ -104,12 +111,28 @@ public class Regal {
 		this.regalHoehe = regalHoehe;
 	}
 
+	public int getAnzahlRegale() {
+		return anzahlRegale;
+	}
+
+	public static void setAnzahlRegale(int anzahlRegale) {
+		Regal.anzahlRegale = anzahlRegale;
+	}
+
 	public Regal[] getRegale() {
 		return regale;
 	}
 
 	public void setRegale(Regal[] regale) {
 		this.regale = regale;
+	}
+
+	public Lagerplatz[][][] getLagerplaetze() {
+		return lagerplaetze;
+	}
+
+	public void setLagerplaetze(Lagerplatz[][][] lagerplaetze) {
+		this.lagerplaetze = lagerplaetze;
 	}
 
 	@Override
