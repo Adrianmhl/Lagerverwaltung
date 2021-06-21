@@ -35,12 +35,11 @@ public class Konsole implements Lagerverwaltung {
 			for (int i = 0; i < Produkt.produkte.length; i++) {
 				if (zumAusbuchen.getBelegung() == Produkt.produkte[i]) {
 
-					 Produkt.produkte[i]=null;
+					Produkt.produkte[i] = null;
 
 				}
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.err.print("Es konnte nicht ausgebucht werden, bitte gültige lagerplatzId eingeben");
 		}
 	}
@@ -84,7 +83,7 @@ public class Konsole implements Lagerverwaltung {
 			for (int i = 0; i < Produkt.produkte.length; i++) {
 				if (produktSuchen(produktId) == Produkt.produkte[i]) {
 
-					 Produkt.produkte[i]=null;
+					Produkt.produkte[i] = null;
 				}
 			}
 		} catch (Exception e) {
@@ -251,9 +250,6 @@ public class Konsole implements Lagerverwaltung {
 	 * 
 	 */
 
-
-	
-
 	/**
 	 * Lager Objekt wird erzeugt ; Ausgabe: Name, LagerID
 	 * 
@@ -299,24 +295,27 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Gibt ausgewähltes Produkt in der Konsole aus, (vllt. mit Methode
-	 * produktEinlagern verbinden)
+	 * @author isedo Gibt ausgewähltes Produkt in der Konsole aus, erstellt Produkt
+	 *         Objekt und übergibt sie zu methode einlagern
 	 */
 
 	private static void gewaehltesProduktConsoleAusgabe(int produktWahlNr, List<Produkt> produktlist) {
-		Produkt produkttmp = produktlist.get(produktWahlNr);
+		try {
+			Produkt produkttmp = produktlist.get(produktWahlNr);
 
-		int produktId = idVergabe();
-		produkttmp.setProduktId(produktId);
+			int produktId = idVergabe();
+			produkttmp.setProduktId(produktId);
 
-		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzIdSuchen());
+			Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzIdSuchen());
 
-		System.out.println("zuBelegen hat funktioniert : " + zuBelegen);
+			Produkt produkt = new Produkt(produkttmp.getKategorie(), produkttmp.getMarke(), produkttmp.getProduktId(),
+					zuBelegen);
 
-		Produkt produkt = new Produkt(produkttmp.getKategorie(), produkttmp.getMarke(), produkttmp.getProduktId(),
-				zuBelegen);
+			einlagern2(produkt, zuBelegen);
 
-		einlagern2(produkt, zuBelegen);
+		} catch (Exception e) {
+			System.err.println("Bitte in 1: Lagerverwaltung ein Regal erstellen!");
+		}
 
 	}
 
@@ -330,15 +329,14 @@ public class Konsole implements Lagerverwaltung {
 	public static void einlagern2(Produkt produkt, Lagerplatz zuBelegen) {
 		try {
 			Produkt produktZurEinlagerung = console.produktSuchen(produkt.getProduktId());
-	
+
 			produktZurEinlagerung.setLagerplatz(zuBelegen);
-	
+
 			zuBelegen.setBelegung(produktZurEinlagerung);
 			System.out.println(produkt);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.err.print("Es konnte nicht eingelagert werden, das Produkt oder Der Lagerplatz ist nicht gültig");
-			
+
 		}
 	}
 
@@ -356,12 +354,26 @@ public class Konsole implements Lagerverwaltung {
 			Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
 			zurEinlagerung.setLagerplatz(zuBelegen);
 			zuBelegen.setBelegung(zurEinlagerung);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.err.print("Es konnte nicht eingelagert werden, die produktId oder lagerId ist nicht gültig");
-			
+
 		}
 
+	}
+
+	public static Produkt produkteBestandAusgeben() {
+
+		for (Produkt produktBestand : Produkt.produkte) {
+
+			if (produktBestand != null) {
+
+				System.out.println(produktBestand);
+				continue;
+			} else {
+				break;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -414,7 +426,7 @@ public class Konsole implements Lagerverwaltung {
 
 						System.out.println("Regale ");
 						int auswahlRegalMenu[] = { 0, 1, 2, 3 };
-						String auswahlRegal[] = { "Exit", "Regal erstellen", "Liste aller Regale", "Regal wÃ¤hlen" };
+						String auswahlRegal[] = { "Exit", "Regal erstellen", "Liste aller Regale", "Regal loeschen" };
 
 						int exitRegalverwaltung = auswahlRegalMenu[0];
 
@@ -442,12 +454,15 @@ public class Konsole implements Lagerverwaltung {
 							}
 
 							if (regalEingabe == auswahlRegalMenu[2]) {
-								System.out.println("LISTE ALLER REGALE");
+
+								for (Regal regal : Regal.regale) {
+									System.out.println(regal);
+
+								}
 
 							}
 
-							// Lager wÃ¤hlen
-							if (regalEingabe == auswahlRegalMenu[2]) {
+							if (regalEingabe == auswahlRegalMenu[3]) {
 								System.out.println("REGAL WÃ„HLEN");
 
 							}
@@ -465,7 +480,7 @@ public class Konsole implements Lagerverwaltung {
 					}
 
 					/**
-					 * Steurung: Produkt einlagern
+					 * Steuerung: Produkt einlagern
 					 */
 					if (menuEingabe == auswahlHauptMenu[2]) {
 
@@ -521,12 +536,7 @@ public class Konsole implements Lagerverwaltung {
 
 								int sucheIdEingabe = consoleInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
 
-								if (console.produktSuchen(sucheIdEingabe) == null) {
-									System.out.println("Nicht im Lager");
-
-								} else {
-									console.produktSuchen(sucheIdEingabe);
-								}
+								console.produktAuslagern(sucheIdEingabe);
 
 							}
 
@@ -547,7 +557,14 @@ public class Konsole implements Lagerverwaltung {
 					 */
 
 					else if (menuEingabe == auswahlHauptMenu[4]) {
-						System.out.println(" IMPLEMENTIEREN!!");
+
+						if (produkteBestandAusgeben() != null) {
+							produkteBestandAusgeben();
+
+						} else {
+							System.err.println("leer");
+						}
+
 					}
 
 					/**
@@ -617,4 +634,5 @@ public class Konsole implements Lagerverwaltung {
 			}
 		} while (bol == false);
 	}
+
 }

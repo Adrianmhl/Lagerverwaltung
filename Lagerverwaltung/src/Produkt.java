@@ -1,4 +1,3 @@
-
 /**
  * @author Adrian
  */
@@ -36,7 +35,6 @@ public class Produkt {
 
 		}
 	}
-	
 
 	public Lagerplatz getLagerplatz() {
 		return lagerplatz;

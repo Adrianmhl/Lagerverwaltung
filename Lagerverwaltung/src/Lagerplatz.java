@@ -77,7 +77,8 @@ public class Lagerplatz {
 //		if (lagerplaetze == null) {
 //			System.err.print("Es existiert noch kein Lagerplatz, bitte ein Regal erstellen!");
 //			return null;
-//		} else {
+//		} else {+
+
 //			for (int i = Lagerplatz.lagerplaetze.length; i > 0; i--) {
 //				if (Lagerplatz.lagerplaetze[i - 1] != null
 //						&& Lagerplatz.lagerplaetze[i - 1].lagerplatzId == lagerplatzId) {

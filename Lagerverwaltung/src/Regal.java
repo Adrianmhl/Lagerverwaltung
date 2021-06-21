@@ -10,7 +10,7 @@ public class Regal {
 	private int regalBreite;// Hat die Einheit Lagerplatz
 	private int regalHoehe;// Hat die Einheit Lagerplatz
 	static int anzahlRegale; // Anzahl aller Regale
-	static Regal[] regale = new Regal[5]; // Auflistung aller Regale
+	static Regal[] regale = new Regal[20]; // Auflistung aller Regale
 	Lagerplatz[][][] lagerplaetze = new Lagerplatz[1500][100][100]; // Lagerplätze [regalId] [Spalte] [Reihe]
 
 	/**
