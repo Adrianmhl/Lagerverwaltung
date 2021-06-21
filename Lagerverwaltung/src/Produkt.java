@@ -36,13 +36,7 @@ public class Produkt {
 
 		}
 	}
-	// Erzeugtes Produkt in Array regale stecken
-//		if (produkte == null) {
-//			produkte[0] = this;
-//		} else {
-//			produkte[anzahlProdukte - 1] = this;
-//		}
-//	}
+	
 
 	public Lagerplatz getLagerplatz() {
 		return lagerplatz;

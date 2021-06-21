@@ -28,10 +28,21 @@ public class Konsole implements Lagerverwaltung {
 	 */
 	@Override
 	public void ausbuchen(int lagerplatzId) {
-		Lagerplatz zumAusbuchen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
-		zumAusbuchen.getBelegung().setLagerplatz(null);
-		zumAusbuchen.setBelegung(null);
+		try {
+			Lagerplatz zumAusbuchen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
+			zumAusbuchen.getBelegung().setLagerplatz(null);
+			zumAusbuchen.setBelegung(null);
+			for (int i = 0; i < Produkt.produkte.length; i++) {
+				if (zumAusbuchen.getBelegung() == Produkt.produkte[i]) {
 
+					 Produkt.produkte[i]=null;
+
+				}
+			}
+		}
+		catch(Exception e){
+			System.err.print("Es konnte nicht ausgebucht werden, bitte gültige lagerplatzId eingeben");
+		}
 	}
 
 	/**
@@ -42,16 +53,43 @@ public class Konsole implements Lagerverwaltung {
 	 */
 	@Override
 	public Produkt produktSuchen(int produktId) {
+		try {
+			for (int i = 0; i < Produkt.produkte.length; i++) {
+				if (produktId == Produkt.produkte[i].getProduktId()) {
 
-		for (int i = 0; i < Produkt.produkte.length; i++) {
-			if (produktId == Produkt.produkte[i].getProduktId()) {
+					System.out.println("Produkt.produkte[i] hat funktioniert" + Produkt.produkte[i]);
+					return Produkt.produkte[i];
 
-				System.out.println("Produkt.produkte[i] hat funktioniert" + Produkt.produkte[i]);
-				return Produkt.produkte[i];
-
+				}
 			}
+			return null;
+		} catch (Exception e) {
+			System.err.print("Bitte gültige produktId eingeben, Produkt konnte nicht gefunden werden");
+			return null;
 		}
-		return null;
+	}
+
+	/**
+	 * Diese Methode lässt Produkte anhand ihrer produktId auslagern
+	 * 
+	 * @author Adrian
+	 * @param produktId
+	 */
+	public void produktAuslagern(int produktId) {
+		try {
+			// Lagerplatz Belegung löschen
+			produktSuchen(produktId).getLagerplatz().setBelegung(null);
+			// Produkt Lagerplatz löschen
+			produktSuchen(produktId).setLagerplatz(null);
+			for (int i = 0; i < Produkt.produkte.length; i++) {
+				if (produktSuchen(produktId) == Produkt.produkte[i]) {
+
+					 Produkt.produkte[i]=null;
+				}
+			}
+		} catch (Exception e) {
+			System.err.print("Bitte gültige produktId eingeben");
+		}
 	}
 
 	/**
@@ -98,11 +136,9 @@ public class Konsole implements Lagerverwaltung {
 			fr.close();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -181,7 +217,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * ÃœberprÃ¼ft zahl => gÃ¼ltig/nichtgÃ¼ltig
+	 * Überprüft zahl => gültig/nicht gültig
 	 */
 	public static int consoleInput(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
 		// Input Onjekt erzeugen
@@ -214,22 +250,9 @@ public class Konsole implements Lagerverwaltung {
 	 * gewaehltes Produkt wird in Liste "produktEingelagertListe" gespeichert
 	 * 
 	 */
-//	public static void produktEinlagern(Produkt produkt) {
-//		int lagerplatzID = 0;
-//		// Lagerplatz
-//		produktEingelagertListe.add(produkt);
-//
-//		System.out.println(lagerplatzID);
-//		console.einlagern(produkt.getProduktId(), lagerplatzID);
-//	}
 
-	/**
-	 * 
-	 */
 
-	public static void allRegaleAusgeben() {
-
-	}
+	
 
 	/**
 	 * Lager Objekt wird erzeugt ; Ausgabe: Name, LagerID
@@ -276,7 +299,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Gibt ausgewÃ¤hltes Produkt in der Konsole aus, (vllt. mit Methode
+	 * Gibt ausgewähltes Produkt in der Konsole aus, (vllt. mit Methode
 	 * produktEinlagern verbinden)
 	 */
 
@@ -298,24 +321,29 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein
+	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein(Anhand von Objekten)
 	 * 
 	 * @author Adrian
 	 * @param lagerplatzId
 	 * @param produktId
 	 */
 	public static void einlagern2(Produkt produkt, Lagerplatz zuBelegen) {
-
-		Produkt produktZurEinlagerung = console.produktSuchen(produkt.getProduktId());
-
-		produktZurEinlagerung.setLagerplatz(zuBelegen);
-
-		zuBelegen.setBelegung(produktZurEinlagerung);
-		System.out.println(produkt);
+		try {
+			Produkt produktZurEinlagerung = console.produktSuchen(produkt.getProduktId());
+	
+			produktZurEinlagerung.setLagerplatz(zuBelegen);
+	
+			zuBelegen.setBelegung(produktZurEinlagerung);
+			System.out.println(produkt);
+		}
+		catch(Exception e){
+			System.err.print("Es konnte nicht eingelagert werden, das Produkt oder Der Lagerplatz ist nicht gültig");
+			
+		}
 	}
 
 	/**
-	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein
+	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein(Anhand von Ids)
 	 * 
 	 * @author Adrian
 	 * @param lagerplatzId
@@ -323,10 +351,16 @@ public class Konsole implements Lagerverwaltung {
 	 */
 	@Override
 	public void einlagern(int lagerplatzId, int produktId) {
-		Produkt zurEinlagerung = produktSuchen(produktId);
-		Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
-		zurEinlagerung.setLagerplatz(zuBelegen);
-		zuBelegen.setBelegung(zurEinlagerung);
+		try {
+			Produkt zurEinlagerung = produktSuchen(produktId);
+			Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
+			zurEinlagerung.setLagerplatz(zuBelegen);
+			zuBelegen.setBelegung(zurEinlagerung);
+		}
+		catch(Exception e){
+			System.err.print("Es konnte nicht eingelagert werden, die produktId oder lagerId ist nicht gültig");
+			
+		}
 
 	}
 
