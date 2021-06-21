@@ -1,6 +1,6 @@
 
 public interface Lagerverwaltung {
-	abstract void einlagern(int lagerplatzId, int produktId);
+	abstract void einlagern(Produkt produkt, Lagerplatz lagerplatz);
 
 	abstract void ausbuchen(int lagerpalatzId);
 

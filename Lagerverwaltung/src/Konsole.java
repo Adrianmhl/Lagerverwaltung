@@ -15,7 +15,6 @@ public class Konsole implements Lagerverwaltung {
 
 	static Konsole console = new Konsole();
 	static List<Produkt> produktListe = new ArrayList<>();
-	static List<Produkt> produktEingelagertListe = new ArrayList<>();
 	static List<Lager> lagerIdListe = new ArrayList<>();
 	static int ids[];
 
@@ -56,7 +55,6 @@ public class Konsole implements Lagerverwaltung {
 			for (int i = 0; i < Produkt.produkte.length; i++) {
 				if (produktId == Produkt.produkte[i].getProduktId()) {
 
-					System.out.println("Produkt.produkte[i] hat funktioniert" + Produkt.produkte[i]);
 					return Produkt.produkte[i];
 
 				}
@@ -84,6 +82,7 @@ public class Konsole implements Lagerverwaltung {
 				if (produktSuchen(produktId) == Produkt.produkte[i]) {
 
 					Produkt.produkte[i] = null;
+					break;
 				}
 			}
 		} catch (Exception e) {
@@ -122,6 +121,13 @@ public class Konsole implements Lagerverwaltung {
 		}
 	}
 
+	/**
+	 * ASCII-Logo Logistica21 wird gelesen und in der Konsole ausgegeben
+	 * 
+	 * @author isedo
+	 * @param fileName
+	 */
+
 	public static void logoEinlesen(String fileName) {
 
 		try {
@@ -141,26 +147,6 @@ public class Konsole implements Lagerverwaltung {
 			e.printStackTrace();
 		}
 
-	}
-
-	/**
-	 * @author isedo Produkte ausgeben (Inhalt)
-	 * @param produkt
-	 */
-	public static void alleGelagerteProdukte() {
-		System.out.println("****************************");
-		System.out.println("Waren im Lager:");
-		// IF-Statement falls Lager leer
-
-		if (produktEingelagertListe.isEmpty()) {
-			System.out.println("LEER");
-		} else {
-			for (Produkt alleProdukte : produktEingelagertListe) {
-
-				System.out.println(alleProdukte);
-			}
-		}
-		System.out.println("****************************");
 	}
 
 	/**
@@ -185,13 +171,14 @@ public class Konsole implements Lagerverwaltung {
 	 * Konsole Ausgabe: Menuauswahl, mit Array
 	 * 
 	 */
-	public static void auswahlMenu(String nr[], int bezeichnung[]) {
-		System.out.println("MENU");
-		System.out.println("****************************");
+	public static void auswahlMenu(String nr[], int bezeichnung[], String bezeichnungMenu) {
+
+		System.out.println(schriftFarbe.RED_BOLD_BRIGHT + "---------------------------" + schriftFarbe.RESET);
+		System.out.println(schriftFarbe.BLUE_BOLD_BRIGHT + "MENU - " + bezeichnungMenu + schriftFarbe.RESET);
+
 		for (int i = 0; i < nr.length; i++) {
 			System.out.printf("%d: %-15s \n", bezeichnung[i], nr[i]);
 		}
-		System.out.println("****************************");
 
 	}
 
@@ -200,25 +187,31 @@ public class Konsole implements Lagerverwaltung {
 	 *
 	 */
 
-	public static void auswahlMenu(List<Produkt> marken) {
-		System.out.println("****************************");
+	public static void auswahlMenu(List<Produkt> marken, String bezeichnungMenu) {
 
-		System.out.printf("%d: %-20s \n", 0, "Exit");
+		System.out.println(schriftFarbe.RED_BOLD_BRIGHT + "---------------------------" + schriftFarbe.RESET);
+		System.out.println(schriftFarbe.BLUE_BOLD_BRIGHT + "MENU - " + bezeichnungMenu + schriftFarbe.RESET);
+
+		System.out.printf("%-15s %s \n", "Marke", "Kategorie");
+		System.out.println("---------------------------");
+		System.out.printf("%d: %-20s \n", 0, "zurueck");
 		for (int i = 0; i < marken.size(); i++) {
 
 			String auswahlBezeichnungKat = marken.get(i).getKategorie();
 			String auswahlBezeichnungMarke = marken.get(i).getMarke();
+
 			System.out.printf("%d: %-15s %s \n", i + 1, auswahlBezeichnungMarke, auswahlBezeichnungKat);
 
 		}
 
-		System.out.println("****************************");
 	}
 
 	/**
-	 * Überprüft zahl => gültig/nicht gültig
+	 * Überprüft Gueltigkeit der Konsolen-Eingabe
+	 * 
+	 * @author isedo
 	 */
-	public static int consoleInput(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
+	public static int konsoleEingabe(String eingabeText, String eingabeErrorText, int min, int max) throws IOException {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
@@ -227,7 +220,12 @@ public class Konsole implements Lagerverwaltung {
 
 	}
 
-	public static int consoleInput(String eingabeText, String eingabeErrorText) throws IOException {
+	/**
+	 * Überprüft Gueltigkeit der Konsolen-Eingabe
+	 * 
+	 * @author isedo
+	 */
+	public static int konsoleEingabe(String eingabeText, String eingabeErrorText) throws IOException {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
@@ -236,7 +234,12 @@ public class Konsole implements Lagerverwaltung {
 
 	}
 
-	public static String consoleInput(String eingabeText) throws IOException {
+	/**
+	 * Überprüft Gueltigkeit der Konsolen-Eingabe
+	 * 
+	 * @author isedo
+	 */
+	public static String konsoleEingabe(String eingabeText) throws IOException {
 		// Input Onjekt erzeugen
 		Input zahl = new Input();
 
@@ -244,11 +247,6 @@ public class Konsole implements Lagerverwaltung {
 		return zahl.inputStrReader(eingabeText);
 
 	}
-
-	/**
-	 * gewaehltes Produkt wird in Liste "produktEingelagertListe" gespeichert
-	 * 
-	 */
 
 	/**
 	 * Lager Objekt wird erzeugt ; Ausgabe: Name, LagerID
@@ -276,17 +274,21 @@ public class Konsole implements Lagerverwaltung {
 	public static void regalErstellen(int lagerId, int regalBreite, int regalHoehe) {
 		Regal tmp = null;
 		tmp = new Regal(lagerId, regalBreite, regalHoehe);
-		System.out.println("1" + tmp);
-		System.out.println("2" + "Anzahl Regale :" + tmp.getAnzahlRegale());
-		System.out.println("3" + "Lagerplatz length: " + Lagerplatz.alleLagerplaetze.toString());
+
 	}
+
+	/**
+	 * Sucht Lagerplatz mit leeren Belegung
+	 * 
+	 * @author isedo, adrian
+	 * @return
+	 */
 
 	public static int lagerplatzIdSuchen() {
 
 		for (int i = 0; i < Lagerplatz.alleLagerplaetze.length; i++) {
 			if (Lagerplatz.alleLagerplaetze[i] != null && Lagerplatz.alleLagerplaetze[i].getBelegung() == null) {
 				int lagerplatzId = Lagerplatz.alleLagerplaetze[i].getLagerplatzId();
-				System.out.println("laggerplatzId hat funktioniert" + lagerplatzId);
 				return lagerplatzId;
 			}
 		}
@@ -295,11 +297,13 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * @author isedo Gibt ausgewähltes Produkt in der Konsole aus, erstellt Produkt
-	 *         Objekt und übergibt sie zu methode einlagern
+	 * Gibt ausgewähltes Produkt in der Konsole aus, erstellt Produkt Objekt und
+	 * übergibt sie zu Methode:einlagern
+	 * 
+	 * @author isedo
 	 */
 
-	private static void gewaehltesProduktConsoleAusgabe(int produktWahlNr, List<Produkt> produktlist) {
+	private static void produktWaehlenLagern(int produktWahlNr, List<Produkt> produktlist) {
 		try {
 			Produkt produkttmp = produktlist.get(produktWahlNr);
 
@@ -311,10 +315,10 @@ public class Konsole implements Lagerverwaltung {
 			Produkt produkt = new Produkt(produkttmp.getKategorie(), produkttmp.getMarke(), produkttmp.getProduktId(),
 					zuBelegen);
 
-			einlagern2(produkt, zuBelegen);
+			console.einlagern(produkt, zuBelegen);
 
 		} catch (Exception e) {
-			System.err.println("Bitte in 1: Lagerverwaltung ein Regal erstellen!");
+			System.err.println("Bitte zu 1: Lagerverwaltung -> 1: Regal erstellen");
 		}
 
 	}
@@ -326,14 +330,18 @@ public class Konsole implements Lagerverwaltung {
 	 * @param lagerplatzId
 	 * @param produktId
 	 */
-	public static void einlagern2(Produkt produkt, Lagerplatz zuBelegen) {
+	@Override
+	public void einlagern(Produkt produkt, Lagerplatz zuBelegen) {
 		try {
 			Produkt produktZurEinlagerung = console.produktSuchen(produkt.getProduktId());
 
 			produktZurEinlagerung.setLagerplatz(zuBelegen);
 
 			zuBelegen.setBelegung(produktZurEinlagerung);
+			System.out.print(schriftFarbe.GREEN);
 			System.out.println(produkt);
+			System.out.print(schriftFarbe.RESET);
+
 		} catch (Exception e) {
 			System.err.print("Es konnte nicht eingelagert werden, das Produkt oder Der Lagerplatz ist nicht gültig");
 
@@ -341,52 +349,67 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Diese Methode lagert ein Produkt auf ein Lagerplatz ein(Anhand von Ids)
+	 * Alle Produkte im Lager werden in der Konsole ausgegeben
 	 * 
-	 * @author Adrian
-	 * @param lagerplatzId
-	 * @param produktId
+	 * @author isedo
+	 * @return
 	 */
-	@Override
-	public void einlagern(int lagerplatzId, int produktId) {
-		try {
-			Produkt zurEinlagerung = produktSuchen(produktId);
-			Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzId);
-			zurEinlagerung.setLagerplatz(zuBelegen);
-			zuBelegen.setBelegung(zurEinlagerung);
-		} catch (Exception e) {
-			System.err.print("Es konnte nicht eingelagert werden, die produktId oder lagerId ist nicht gültig");
 
+	public boolean produktBestandAusgeben() {
+
+		boolean bol = false;
+
+		for (Produkt produktBestand : Produkt.produkte) {
+			if (produktBestand != null) {
+				System.out.print(schriftFarbe.GREEN);
+				System.out.println(produktBestand);
+				System.out.print(schriftFarbe.RESET);
+				bol = true;
+				continue;
+			}
 		}
+		return bol;
 
 	}
 
-	public static Produkt produkteBestandAusgeben() {
+	/**
+	 * Alle verfügbaren Regale werden in der Konsole ausgegeben
+	 * 
+	 * @author isedo
+	 * @return
+	 */
 
-		for (Produkt produktBestand : Produkt.produkte) {
+	public boolean regaleAusgeben() {
 
-			if (produktBestand != null) {
+		boolean bol = false;
 
-				System.out.println(produktBestand);
+		for (Regal regal : Regal.regale) {
+			if (regal != null) {
+				System.out.print(schriftFarbe.GREEN);
+				System.out.println(regal);
+				System.out.print(schriftFarbe.RESET);
+				bol = true;
 				continue;
-			} else {
-				break;
 			}
 		}
-		return null;
+		return bol;
 	}
 
 	/**
 	 * Main-Methode, Steuerung des Programms
 	 * 
+	 * @author isedo
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 
+		System.out.print(schriftFarbe.BLUE_BOLD_BRIGHT);
 		logoEinlesen("asciiArt.txt");
+		System.out.print(schriftFarbe.RESET);
+
 		produktEinlesen("EinzulesendeDatei.txt", produktListe);
 
 		System.out.println("Lager erstellen: y/n ");
-		String startEingabe = consoleInput("Eingabe:");
+		String startEingabe = konsoleEingabe("Eingabe: ");
 
 		boolean bol = false;
 
@@ -403,15 +426,16 @@ public class Konsole implements Lagerverwaltung {
 
 				// Einstellungen Hauptmenu
 
+				String bezeichnungHauptmenu = "Hauptmenu";
 				int auswahlHauptMenu[] = { 0, 1, 2, 3, 4, 5 };
-				String auswahlMenu[] = { "Exit", "Lagerverwaltung", "Wareneingang", "Warenausgang", "Bestand",
-						"Suche" };
+				String auswahlMenu[] = { "Programmm beenden", "Lagerverwaltung", "Wareneingang", "Warenausgang",
+						"Bestand", "Suche" };
 				int exitHauptmenu = auswahlHauptMenu[0];
 
 				// Ausgabe: Hauptmenu
-				auswahlMenu(auswahlMenu, auswahlHauptMenu);
+				auswahlMenu(auswahlMenu, auswahlHauptMenu, bezeichnungHauptmenu);
 
-				int menuEingabe = consoleInput("Eingabe: ",
+				int menuEingabe = konsoleEingabe("Eingabe: ",
 						"Error: Bitte Zahl zwischen:" + auswahlHauptMenu[0] + " - "
 								+ auswahlHauptMenu[auswahlHauptMenu.length - 1],
 						auswahlHauptMenu[0], auswahlHauptMenu[auswahlHauptMenu.length - 1]);
@@ -424,15 +448,15 @@ public class Konsole implements Lagerverwaltung {
 					 */
 					if (menuEingabe == auswahlHauptMenu[1]) {
 
-						System.out.println("Regale ");
+						String bezeichnungRegal = "Lagerverwaltung";
 						int auswahlRegalMenu[] = { 0, 1, 2, 3 };
-						String auswahlRegal[] = { "Exit", "Regal erstellen", "Liste aller Regale", "Regal loeschen" };
+						String auswahlRegal[] = { "zurueck", "Regal erstellen", "Regale im Lager", "Regal loeschen" };
 
 						int exitRegalverwaltung = auswahlRegalMenu[0];
 
-						auswahlMenu(auswahlRegal, auswahlRegalMenu);
+						auswahlMenu(auswahlRegal, auswahlRegalMenu, bezeichnungRegal);
 
-						int regalEingabe = consoleInput("Eingabe: ",
+						int regalEingabe = konsoleEingabe("Eingabe: ",
 								"Error: Bitte Zahl zwischen:" + auswahlRegalMenu[0] + " - "
 										+ auswahlRegalMenu[auswahlRegalMenu.length - 1],
 								auswahlRegalMenu[0], auswahlRegalMenu[auswahlRegalMenu.length - 1]);
@@ -440,14 +464,13 @@ public class Konsole implements Lagerverwaltung {
 						while (regalEingabe != exitRegalverwaltung) {
 
 							if (regalEingabe == auswahlRegalMenu[1]) {
-								System.out.println("REGAL ERSTELLEN");
-								System.out.println("****************************");
+								System.out.println(
+										schriftFarbe.BLUE_BOLD_BRIGHT + "Regal erstellen" + schriftFarbe.RESET);
 
-								int regalHoeheEingabe = consoleInput("HÃ¶he: ",
+								int regalHoeheEingabe = konsoleEingabe("hoehe: ",
 										"Error: Bitte Zahl zwischen:" + 1 + " - " + 10, 1, 10);
-								System.out.println("****************************");
 
-								int regalBreiteEingabe = consoleInput("Breite: ",
+								int regalBreiteEingabe = konsoleEingabe("breite: ",
 										"Error: Bitte Zahl zwischen:" + 1 + " - " + 10, 1, 10);
 
 								regalErstellen(lagerIdListe.get(0).getLagerId(), regalHoeheEingabe, regalBreiteEingabe);
@@ -455,9 +478,8 @@ public class Konsole implements Lagerverwaltung {
 
 							if (regalEingabe == auswahlRegalMenu[2]) {
 
-								for (Regal regal : Regal.regale) {
-									System.out.println(regal);
-
+								if (console.regaleAusgeben() == false) {
+									System.out.println("Keine Regale vorhanden");
 								}
 
 							}
@@ -467,15 +489,13 @@ public class Konsole implements Lagerverwaltung {
 
 							}
 
-							auswahlMenu(auswahlRegal, auswahlRegalMenu);
-							regalEingabe = consoleInput("Eingabe: ",
+							auswahlMenu(auswahlRegal, auswahlRegalMenu, bezeichnungRegal);
+							regalEingabe = konsoleEingabe("Eingabe: ",
 									"Error: Bitte Zahl zwischen:" + auswahlRegalMenu[0] + " - "
 											+ auswahlRegalMenu[auswahlRegalMenu.length - 1],
 									auswahlRegalMenu[0], auswahlRegalMenu[auswahlRegalMenu.length - 1]);
 
 						}
-
-						System.out.println("Exit Lagerverwaltung");
 
 					}
 
@@ -486,29 +506,26 @@ public class Konsole implements Lagerverwaltung {
 
 						int exitWareneingang = 0;
 						// Output Konsole, alle Produkte
-						System.out.println("Produkt zum einlagern wÃ¤hlen: ");
-						System.out.printf("%-15s %s \n", "Marke", "Kategorie");
+						String bezeichnungWareneingang = "Wareneingang";
 						// Ausgabe: Produktet aus .txt datei, Quelle --> Anfang main-methode
-						auswahlMenu(produktListe);
+						auswahlMenu(produktListe, bezeichnungWareneingang);
 
-						int produktEingabe = consoleInput("Eingabe: ",
+						int produktEingabe = konsoleEingabe("Eingabe: ",
 								"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(), 0,
 								produktListe.size());
 
 						while (produktEingabe != exitWareneingang) {
 
 							if (produktEingabe < produktListe.size()) {
-								gewaehltesProduktConsoleAusgabe(produktEingabe - 1, produktListe);
+								produktWaehlenLagern(produktEingabe - 1, produktListe);
 
 							}
 
-							auswahlMenu(produktListe);
-							produktEingabe = consoleInput("Eingabe: ",
+							auswahlMenu(produktListe, bezeichnungWareneingang);
+							produktEingabe = konsoleEingabe("Eingabe: ",
 									"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(), 0,
 									produktListe.size());
 						}
-						System.out.println("EXIT WARENEINGANG");
-						System.out.println("****************************");
 
 					}
 					/**
@@ -517,15 +534,15 @@ public class Konsole implements Lagerverwaltung {
 
 					else if (menuEingabe == auswahlHauptMenu[3]) {
 
-						System.out.println("SUCHE ");
+						String bezeichnungSuche = "Suche";
 						int auswahlAusbuchenNr[] = { 0, 1 };
-						String auswahlAusbuchenMenu[] = { "Exit", "ID Eingabe" };
+						String auswahlAusbuchenMenu[] = { "zurueck", "ID Eingabe" };
 
 						int exitAusbuchen = auswahlAusbuchenNr[0];
 						// Ausgabe: Lagermenu
-						auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr);
+						auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr, bezeichnungSuche);
 
-						int ausbuchenEingabe = consoleInput("Eingabe: ",
+						int ausbuchenEingabe = konsoleEingabe("Eingabe: ",
 								"Error: Bitte Zahl zwischen:" + auswahlAusbuchenNr[0] + " - "
 										+ auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1],
 								auswahlAusbuchenNr[0], auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1]);
@@ -534,23 +551,21 @@ public class Konsole implements Lagerverwaltung {
 
 							if (ausbuchenEingabe == auswahlAusbuchenNr[1]) {
 
-								int sucheIdEingabe = consoleInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
+								int sucheIdEingabe = konsoleEingabe("Produkt ID : ", "Error: Nur Zahlen eingeben");
 
 								console.produktAuslagern(sucheIdEingabe);
 
 							}
 
-							auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr);
+							auswahlMenu(auswahlAusbuchenMenu, auswahlAusbuchenNr, bezeichnungSuche);
 
-							ausbuchenEingabe = consoleInput("Eingabe: ",
+							ausbuchenEingabe = konsoleEingabe("Eingabe: ",
 									"Error: Bitte Zahl zwischen:" + auswahlAusbuchenNr[0] + " - "
 											+ auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1],
 									auswahlAusbuchenNr[0], auswahlAusbuchenNr[auswahlAusbuchenMenu.length - 1]);
 
 						}
 
-						System.out.println("EXIT: AUSBUCHEN");
-						// quit
 					}
 					/**
 					 * Steuerung: Bestand ausgeben
@@ -558,11 +573,10 @@ public class Konsole implements Lagerverwaltung {
 
 					else if (menuEingabe == auswahlHauptMenu[4]) {
 
-						if (produkteBestandAusgeben() != null) {
-							produkteBestandAusgeben();
-
-						} else {
-							System.err.println("leer");
+						if (console.produktBestandAusgeben() == false) {
+							System.out.print(schriftFarbe.MAGENTA_BRIGHT);
+							System.out.println("Kein Bestand im Lager!");
+							System.out.print(schriftFarbe.RESET);
 						}
 
 					}
@@ -573,15 +587,15 @@ public class Konsole implements Lagerverwaltung {
 
 					else if (menuEingabe == auswahlHauptMenu[5]) {
 
-						System.out.println("SUCHE ");
+						String bezeichnungProdSuche = "Produktsuche";
 						int auswahlSucheNr[] = { 0, 1 };
-						String auswahlSucheMenu[] = { "Exit", "ID Eingabe" };
+						String auswahlSucheMenu[] = { "zurueck", "Produkt-Id Eingabe" };
 
 						int exitSuche = auswahlSucheNr[0];
 						// Ausgabe: Lagermenu
-						auswahlMenu(auswahlSucheMenu, auswahlSucheNr);
+						auswahlMenu(auswahlSucheMenu, auswahlSucheNr, bezeichnungProdSuche);
 
-						int sucheEingabe = consoleInput("Eingabe: ",
+						int sucheEingabe = konsoleEingabe("Eingabe: ",
 								"Error: Bitte Zahl zwischen:" + auswahlSucheNr[0] + " - "
 										+ auswahlSucheNr[auswahlSucheNr.length - 1],
 								auswahlSucheNr[0], auswahlSucheNr[auswahlSucheNr.length - 1]);
@@ -590,34 +604,29 @@ public class Konsole implements Lagerverwaltung {
 
 							if (sucheEingabe == auswahlSucheNr[1]) {
 
-								int sucheIdEingabe = consoleInput("Produkt ID : ", "Error: Nur Zahlen eingeben");
+								int sucheIdEingabe = konsoleEingabe("Produkt ID : ", "Error: Nur Zahlen eingeben");
 
-								if (console.produktSuchen(sucheIdEingabe) == null) {
-									System.out.println("Nicht im Lager");
-
-								} else {
-									console.produktSuchen(sucheIdEingabe);
-								}
+								System.out.print(schriftFarbe.GREEN);
+								System.out.println(console.produktSuchen(sucheIdEingabe));
+								System.out.print(schriftFarbe.RESET);
 
 							}
 
-							auswahlMenu(auswahlSucheMenu, auswahlSucheNr);
+							auswahlMenu(auswahlSucheMenu, auswahlSucheNr, bezeichnungProdSuche);
 
-							sucheEingabe = consoleInput("Eingabe: ",
+							sucheEingabe = konsoleEingabe("Eingabe: ",
 									"Error: Bitte Zahl zwischen:" + auswahlSucheNr[0] + " - "
 											+ auswahlSucheNr[auswahlSucheNr.length - 1],
 									auswahlSucheNr[0], auswahlSucheNr[auswahlSucheNr.length - 1]);
 						}
 
-						System.out.println("EXIT: SUCHE");
-						// quit
 					}
 					/**
-					 * Schleife, zurÃ¼ck ins Hauptmenu
+					 * Schleife, zurueck ins Hauptmenu
 					 */
 
-					auswahlMenu(auswahlMenu, auswahlHauptMenu);
-					menuEingabe = consoleInput("Eingabe: ",
+					auswahlMenu(auswahlMenu, auswahlHauptMenu, bezeichnungHauptmenu);
+					menuEingabe = konsoleEingabe("Eingabe: ",
 							"Error: Bitte Zahl zwischen: " + auswahlHauptMenu[0] + " - "
 									+ auswahlHauptMenu[auswahlHauptMenu.length - 1],
 							auswahlHauptMenu[0], auswahlHauptMenu[auswahlHauptMenu.length - 1]);
@@ -630,7 +639,7 @@ public class Konsole implements Lagerverwaltung {
 
 			default:
 				System.out.println(("y/n"));
-				startEingabe = consoleInput("Eingabe:");
+				startEingabe = konsoleEingabe("Eingabe:");
 			}
 		} while (bol == false);
 	}

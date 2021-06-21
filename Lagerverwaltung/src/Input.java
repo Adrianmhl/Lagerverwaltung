@@ -21,7 +21,7 @@ public class Input {
 
 		InputStreamReader is = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(is);
-		System.out.println(eingabeMsg);
+		System.out.print(schriftFarbe.YELLOW_BOLD_BRIGHT + eingabeMsg + schriftFarbe.RESET);
 		String strInput = br.readLine();
 
 		return strInput;
@@ -32,22 +32,22 @@ public class Input {
 
 		int num = 0;
 		String strInput;
-		boolean richtig = false;
+		boolean bol = false;
 
 		InputStreamReader is = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(is);
 
 		// Schleife bricht erst wenn Zahl eingegeben wird
-		while (richtig == false) {
+		while (bol == false) {
 
 			// Anwender hinweisen
-			System.out.println(eingabeMsg);
+			System.out.print(schriftFarbe.YELLOW_BOLD_BRIGHT + eingabeMsg + schriftFarbe.RESET);
 
 			strInput = br.readLine();
 
 			try {
 				num = Integer.parseInt(strInput);
-				richtig = true;
+				bol = true;
 			} catch (NumberFormatException e) {
 				System.out.println(eingabeError);
 			}
@@ -60,13 +60,13 @@ public class Input {
 
 		int num = 0;
 		String strInput;
-		boolean richtig = false;
+		boolean bol = false;
 
 		// Schleife bricht erst wenn Zahl eingegeben wird
-		while (richtig == false) {
+		while (bol == false) {
 
 			// Anwender auf Eingabe hinweisen
-			System.out.println(eingabeMsg);
+			System.out.print(schriftFarbe.YELLOW_BOLD_BRIGHT + eingabeMsg + schriftFarbe.RESET);
 
 			strInput = br.readLine();
 
@@ -74,7 +74,7 @@ public class Input {
 
 				num = Integer.parseInt(strInput);
 				if (num >= min && num <= max) {
-					richtig = true;
+					bol = true;
 
 				} else
 					System.out.println(eingabeError);

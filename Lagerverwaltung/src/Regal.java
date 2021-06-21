@@ -38,8 +38,9 @@ public class Regal {
 			if (regale[i] == null) {
 				regale[i] = this;
 
-				System.out.println("this" + this);
-				System.out.println("anzahl runden" + i);
+				System.out.print(schriftFarbe.GREEN);
+				System.out.println(this);
+				System.out.print(schriftFarbe.RESET);
 				break;
 			}
 
@@ -50,7 +51,11 @@ public class Regal {
 			for (int l = regalHoehe; l > 0; l--) {
 				lagerplaetze[this.regalId][i][l] = new Lagerplatz(this.regalId, i, l); // lagerplaetze [0][0] bleibt
 																						// frei, dafür sind die Nummern
-				System.out.println(lagerplaetze[this.regalId][i][l]); // gleich
+																						// gleich
+
+				System.out.print(schriftFarbe.GREEN_BRIGHT);
+				System.out.println(lagerplaetze[this.regalId][i][l]);
+				System.out.print(schriftFarbe.RESET);
 			}
 
 		}
@@ -68,6 +73,7 @@ public class Regal {
 		for (int i = regale.length; i > 0; i--) {
 			if (regale[i - 1].regalId == regalId) {
 				regale[i - 1] = null;
+				zumAbbauen = regale[i - 1];
 			}
 		}
 		// Produkte im Regal Lagerplatz = null

@@ -29,7 +29,6 @@ public class Produkt {
 
 			if (produkte[i] == null) {
 				produkte[i] = this;
-				System.out.println(produkte[i]);
 				break;
 			}
 
@@ -88,7 +87,7 @@ public class Produkt {
 	@Override
 	public String toString() {
 		return "Produkt [marke=" + marke + ", kategorie=" + kategorie + ", lagerplatz=" + lagerplatz + ", produktId="
-				+ produktId + ", anzahlProdukte=" + anzahlProdukte + "]";
+				+ produktId + "]";
 	}
 
 }
