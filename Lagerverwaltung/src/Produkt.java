@@ -1,7 +1,7 @@
 /**
  * @author Adrian
  */
-public class Produkt {
+public class Produkt implements Comparable {
 
 	private String marke;
 	private String kategorie;
@@ -88,6 +88,11 @@ public class Produkt {
 	public String toString() {
 		return "Produkt [marke=" + marke + ", kategorie=" + kategorie + ", lagerplatz=" + lagerplatz + ", produktId="
 				+ produktId + "]";
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		return this.kategorie.compareTo(((Produkt) o).kategorie);
 	}
 
 }

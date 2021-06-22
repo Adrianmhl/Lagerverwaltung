@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -61,7 +62,7 @@ public class Konsole implements Lagerverwaltung {
 			}
 			return null;
 		} catch (Exception e) {
-			System.err.print("Bitte gültige produktId eingeben, Produkt konnte nicht gefunden werden");
+			System.err.println("Bitte gueltige produktId eingeben, Produkt konnte nicht gefunden werden");
 			return null;
 		}
 	}
@@ -73,21 +74,19 @@ public class Konsole implements Lagerverwaltung {
 	 * @param produktId
 	 */
 	public void produktAuslagern(int produktId) {
-		try {
-			// Lagerplatz Belegung löschen
-			produktSuchen(produktId).getLagerplatz().setBelegung(null);
-			// Produkt Lagerplatz löschen
-			produktSuchen(produktId).setLagerplatz(null);
-			for (int i = 0; i < Produkt.produkte.length; i++) {
-				if (produktSuchen(produktId) == Produkt.produkte[i]) {
 
-					Produkt.produkte[i] = null;
-					break;
-				}
+		// Lagerplatz Belegung löschen
+		produktSuchen(produktId).getLagerplatz().setBelegung(null);
+		// Produkt Lagerplatz löschen
+		produktSuchen(produktId).setLagerplatz(null);
+		for (int i = 0; i < Produkt.produkte.length; i++) {
+			if (produktSuchen(produktId) == Produkt.produkte[i]) {
+				System.out.println(Produkt.produkte[i] + " wurde ausgelagert!");
+				Produkt.produkte[i] = null;
+				break;
 			}
-		} catch (Exception e) {
-			System.err.print("Bitte gueltige produktId eingeben");
 		}
+
 	}
 
 	/**
@@ -98,7 +97,8 @@ public class Konsole implements Lagerverwaltung {
 	 * @throws FileNotFoundException
 	 */
 
-	public static void produktEinlesen(String fileName, List<Produkt> markenListe) throws FileNotFoundException {
+	@SuppressWarnings("unchecked")
+	public static void produktEinlesen(String fileName, List<Produkt> liste) throws FileNotFoundException {
 
 		try {
 
@@ -111,7 +111,8 @@ public class Konsole implements Lagerverwaltung {
 				String kategorie = werte[0];
 				String marke = werte[1];
 
-				markenListe.add(new Produkt(kategorie, marke));
+				liste.add(new Produkt(kategorie, marke));
+				Collections.sort(produktListe);
 
 			}
 			br.close();
@@ -187,20 +188,20 @@ public class Konsole implements Lagerverwaltung {
 	 *
 	 */
 
-	public static void auswahlMenu(List<Produkt> marken, String bezeichnungMenu) {
+	public static void auswahlMenu(List<Produkt> produkte, String bezeichnungMenu) {
 
 		System.out.println(schriftFarbe.RED_BOLD_BRIGHT + "---------------------------" + schriftFarbe.RESET);
 		System.out.println(schriftFarbe.BLUE_BOLD_BRIGHT + "MENU - " + bezeichnungMenu + schriftFarbe.RESET);
 
-		System.out.printf("%-15s %s \n", "Marke", "Kategorie");
+		System.out.printf("%-20s %s \n", "Marke", "Kategorie");
 		System.out.println("---------------------------");
-		System.out.printf("%d: %-20s \n", 0, "zurueck");
-		for (int i = 0; i < marken.size(); i++) {
+		System.out.printf("%2d: %-20s \n", 0, "zurueck");
+		for (int i = 0; i < produkte.size(); i++) {
 
-			String auswahlBezeichnungKat = marken.get(i).getKategorie();
-			String auswahlBezeichnungMarke = marken.get(i).getMarke();
+			String auswahlBezeichnungKat = produkte.get(i).getKategorie();
+			String auswahlBezeichnungMarke = produkte.get(i).getMarke();
 
-			System.out.printf("%d: %-15s %s \n", i + 1, auswahlBezeichnungMarke, auswahlBezeichnungKat);
+			System.out.printf("%2d: %-20s %s \n", i + 1, auswahlBezeichnungMarke, auswahlBezeichnungKat);
 
 		}
 
@@ -318,7 +319,7 @@ public class Konsole implements Lagerverwaltung {
 			console.einlagern(produkt, zuBelegen);
 
 		} catch (Exception e) {
-			System.err.println("Bitte zu 1: Lagerverwaltung -> 1: Regal erstellen");
+			System.err.println("Bitte '0: zurueck' -> '1: Lagerverwaltung' -> '1: Regal erstellen' ! ");
 		}
 
 	}
@@ -401,12 +402,10 @@ public class Konsole implements Lagerverwaltung {
 	 * @author isedo
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-
+		produktEinlesen("EinzulesendeDatei.txt", produktListe);
 		System.out.print(schriftFarbe.BLUE_BOLD_BRIGHT);
 		logoEinlesen("asciiArt.txt");
 		System.out.print(schriftFarbe.RESET);
-
-		produktEinlesen("EinzulesendeDatei.txt", produktListe);
 
 		System.out.println("Lager erstellen: y/n ");
 		String startEingabe = konsoleEingabe("Eingabe: ");
@@ -450,7 +449,8 @@ public class Konsole implements Lagerverwaltung {
 
 						String bezeichnungRegal = "Lagerverwaltung";
 						int auswahlRegalMenu[] = { 0, 1, 2, 3 };
-						String auswahlRegal[] = { "zurueck", "Regal erstellen", "Regale im Lager", "Regal loeschen" };
+						String auswahlRegal[] = { "zurueck", "Regal erstellen", "Regale im Lager",
+								"Regal loeschen (..in Bearbeitung)" };
 
 						int exitRegalverwaltung = auswahlRegalMenu[0];
 
@@ -479,13 +479,15 @@ public class Konsole implements Lagerverwaltung {
 							if (regalEingabe == auswahlRegalMenu[2]) {
 
 								if (console.regaleAusgeben() == false) {
-									System.out.println("Keine Regale vorhanden");
+									System.out.println("Keine Regale im Lager !");
 								}
 
 							}
 
 							if (regalEingabe == auswahlRegalMenu[3]) {
-								System.out.println("REGAL WÃ„HLEN");
+
+								int regalIdEingabe = konsoleEingabe("Regal-Id : ", "Error: Nur Zahlen eingeben");
+								Regal.regalAbbauen(regalIdEingabe);
 
 							}
 
@@ -500,23 +502,24 @@ public class Konsole implements Lagerverwaltung {
 					}
 
 					/**
-					 * Steuerung: Produkt einlagern
+					 * Steuerung: Wareneingang (Produkt auswaehlen und einlagern)
 					 */
 					if (menuEingabe == auswahlHauptMenu[2]) {
 
 						int exitWareneingang = 0;
 						// Output Konsole, alle Produkte
 						String bezeichnungWareneingang = "Wareneingang";
-						// Ausgabe: Produktet aus .txt datei, Quelle --> Anfang main-methode
+						// Ausgabe: Produktet aus .txt datei, Quelle --> Anfang main-methode, sonst kein
+						// reset
 						auswahlMenu(produktListe, bezeichnungWareneingang);
 
 						int produktEingabe = konsoleEingabe("Eingabe: ",
-								"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(), 0,
-								produktListe.size());
+								"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(),
+								exitWareneingang, produktListe.size());
 
 						while (produktEingabe != exitWareneingang) {
 
-							if (produktEingabe < produktListe.size()) {
+							if (produktEingabe <= produktListe.size()) {
 								produktWaehlenLagern(produktEingabe - 1, produktListe);
 
 							}
@@ -536,7 +539,7 @@ public class Konsole implements Lagerverwaltung {
 
 						String bezeichnungSuche = "Suche";
 						int auswahlAusbuchenNr[] = { 0, 1 };
-						String auswahlAusbuchenMenu[] = { "zurueck", "ID Eingabe" };
+						String auswahlAusbuchenMenu[] = { "zurueck", "Produkt-Id Eingabe" };
 
 						int exitAusbuchen = auswahlAusbuchenNr[0];
 						// Ausgabe: Lagermenu
@@ -551,7 +554,7 @@ public class Konsole implements Lagerverwaltung {
 
 							if (ausbuchenEingabe == auswahlAusbuchenNr[1]) {
 
-								int sucheIdEingabe = konsoleEingabe("Produkt ID : ", "Error: Nur Zahlen eingeben");
+								int sucheIdEingabe = konsoleEingabe("Produkt-Id : ", "Error: Nur Zahlen eingeben");
 
 								console.produktAuslagern(sucheIdEingabe);
 
@@ -606,9 +609,15 @@ public class Konsole implements Lagerverwaltung {
 
 								int sucheIdEingabe = konsoleEingabe("Produkt ID : ", "Error: Nur Zahlen eingeben");
 
-								System.out.print(schriftFarbe.GREEN);
-								System.out.println(console.produktSuchen(sucheIdEingabe));
-								System.out.print(schriftFarbe.RESET);
+								if (console.produktSuchen(sucheIdEingabe) == null) {
+									System.out.println(console.produktSuchen(sucheIdEingabe));
+
+								} else {
+									System.out.print(schriftFarbe.GREEN);
+									System.out.println(console.produktSuchen(sucheIdEingabe));
+									System.out.print(schriftFarbe.RESET);
+
+								}
 
 							}
 

@@ -11,7 +11,7 @@ public class Regal {
 	private int regalHoehe;// Hat die Einheit Lagerplatz
 	static int anzahlRegale; // Anzahl aller Regale
 	static Regal[] regale = new Regal[20]; // Auflistung aller Regale
-	Lagerplatz[][][] lagerplaetze = new Lagerplatz[1500][100][100]; // Lagerplätze [regalId] [Spalte] [Reihe]
+	static Lagerplatz[][][] lagerplaetze = new Lagerplatz[1500][100][100]; // Lagerplätze [regalId] [Spalte] [Reihe]
 
 	/**
 	 * Der Konstruktor erzeigt ein neues Regal und dessen Lagerplätze Die
@@ -67,7 +67,7 @@ public class Regal {
 	 * 
 	 * @param regalId
 	 */
-	public void regalAbbauen(int regalId) {
+	public static void regalAbbauen(int regalId) {
 		Regal zumAbbauen = null;
 		// mit ID Regal ausfindig machen
 		for (int i = regale.length; i > 0; i--) {
