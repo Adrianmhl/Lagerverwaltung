@@ -28,7 +28,7 @@ public class Input {
 
 	}
 
-	public int inputIntReader(String eingabeMsg, String eingabeError) throws IOException {
+	public int inputIntReader(String eingabeMsg, String eingabeError) throws IOException{
 
 		int num = 0;
 		String strInput;
@@ -48,7 +48,7 @@ public class Input {
 			try {
 				num = Integer.parseInt(strInput);
 				bol = true;
-			} catch (NumberFormatException e) {
+			} catch (Exception e) {
 				System.out.println(eingabeError);
 			}
 		}

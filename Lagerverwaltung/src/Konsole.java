@@ -19,7 +19,7 @@ public class Konsole implements Lagerverwaltung {
 	static int ids[];
 
 	/**
-	 * Diese Methode lÃ¶scht die belegung des Lagerplatzs und den lagerplatz des
+	 * Diese Methode loescht die belegung des Lagerplatzs und den lagerplatz des
 	 * Produkts
 	 * 
 	 * @author Adrian
@@ -39,7 +39,7 @@ public class Konsole implements Lagerverwaltung {
 				}
 			}
 		} catch (Exception e) {
-			System.err.print("Es konnte nicht ausgebucht werden, bitte gültige lagerplatzId eingeben");
+			System.err.print("Es konnte nicht ausgebucht werden, bitte gueltige lagerplatzId eingeben");
 		}
 	}
 
@@ -67,7 +67,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Diese Methode lässt Produkte anhand ihrer produktId auslagern
+	 * Diese Methode laesst Produkte anhand ihrer produktId auslagern
 	 * 
 	 * @author Adrian
 	 * @param produktId
@@ -86,7 +86,7 @@ public class Konsole implements Lagerverwaltung {
 				}
 			}
 		} catch (Exception e) {
-			System.err.print("Bitte gültige produktId eingeben");
+			System.err.print("Bitte gueltige produktId eingeben");
 		}
 	}
 
@@ -221,7 +221,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Überprüft Gueltigkeit der Konsolen-Eingabe
+	 * Ueberprueft Gueltigkeit der Konsolen-Eingabe
 	 * 
 	 * @author isedo
 	 */
@@ -235,7 +235,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Überprüft Gueltigkeit der Konsolen-Eingabe
+	 * Ueberprueft Gueltigkeit der Konsolen-Eingabe
 	 * 
 	 * @author isedo
 	 */
@@ -297,8 +297,8 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Gibt ausgewähltes Produkt in der Konsole aus, erstellt Produkt Objekt und
-	 * übergibt sie zu Methode:einlagern
+	 * Gibt ausgewaehltes Produkt in der Konsole aus, erstellt Produkt Objekt und
+	 * uebergibt sie zu Methode:einlagern
 	 * 
 	 * @author isedo
 	 */
@@ -373,7 +373,7 @@ public class Konsole implements Lagerverwaltung {
 	}
 
 	/**
-	 * Alle verfügbaren Regale werden in der Konsole ausgegeben
+	 * Alle verfuegbaren Regale werden in der Konsole ausgegeben
 	 * 
 	 * @author isedo
 	 * @return
