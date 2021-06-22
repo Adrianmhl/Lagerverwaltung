@@ -75,16 +75,22 @@ public class Konsole implements Lagerverwaltung {
 	 */
 	public void produktAuslagern(int produktId) {
 
-		// Lagerplatz Belegung löschen
-		produktSuchen(produktId).getLagerplatz().setBelegung(null);
-		// Produkt Lagerplatz löschen
-		produktSuchen(produktId).setLagerplatz(null);
-		for (int i = 0; i < Produkt.produkte.length; i++) {
-			if (produktSuchen(produktId) == Produkt.produkte[i]) {
-				System.out.println(Produkt.produkte[i] + " wurde ausgelagert!");
-				Produkt.produkte[i] = null;
-				break;
+		try {
+			// Lagerplatz Belegung löschen
+			produktSuchen(produktId).getLagerplatz().setBelegung(null);
+			// Produkt Lagerplatz löschen
+			produktSuchen(produktId).setLagerplatz(null);
+			for (int i = 0; i < Produkt.produkte.length; i++) {
+				if (produktSuchen(produktId) == Produkt.produkte[i]) {
+					System.out.print(schriftFarbe.GREEN);
+					System.out.println(Produkt.produkte[i] + " wurde ausgelagert!");
+					System.out.print(schriftFarbe.RESET);
+					Produkt.produkte[i] = null;
+					break;
+				}
 			}
+		} catch (Exception e) {
+			System.out.println("Bitte gueltige Produkt-Id eingeben ! ");
 		}
 
 	}
