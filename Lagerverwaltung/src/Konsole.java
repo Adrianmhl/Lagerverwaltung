@@ -103,8 +103,7 @@ public class Konsole implements Lagerverwaltung {
 	 * @throws FileNotFoundException
 	 */
 
-	@SuppressWarnings("unchecked")
-	public static void produktEinlesen(String fileName, List<Produkt> liste) throws FileNotFoundException {
+	public static void produktEinlesen(String fileName, List<Produkt> produktListe) throws FileNotFoundException {
 
 		try {
 
@@ -117,7 +116,7 @@ public class Konsole implements Lagerverwaltung {
 				String kategorie = werte[0];
 				String marke = werte[1];
 
-				liste.add(new Produkt(kategorie, marke));
+				produktListe.add(new Produkt(kategorie, marke));
 				Collections.sort(produktListe);
 
 			}
@@ -177,6 +176,8 @@ public class Konsole implements Lagerverwaltung {
 	/**
 	 * Konsole Ausgabe: Menuauswahl, mit Array
 	 * 
+	 * @author isedo
+	 * 
 	 */
 	public static void auswahlMenu(String nr[], int bezeichnung[], String bezeichnungMenu) {
 
@@ -191,6 +192,8 @@ public class Konsole implements Lagerverwaltung {
 
 	/**
 	 * Konsole Ausgabe: Menuauswahl, mit ArrayList
+	 * 
+	 * @author isedo
 	 *
 	 */
 
@@ -258,7 +261,7 @@ public class Konsole implements Lagerverwaltung {
 	/**
 	 * Lager Objekt wird erzeugt ; Ausgabe: Name, LagerID
 	 * 
-	 * 
+	 * @isedo
 	 * @param name
 	 * @param id
 	 */
@@ -273,6 +276,7 @@ public class Konsole implements Lagerverwaltung {
 	/**
 	 * Regal Objekt wird erzeugt
 	 * 
+	 * @isedo
 	 * @param lagerId
 	 * @param regalBreite
 	 * @param regalHoehe
@@ -317,11 +321,13 @@ public class Konsole implements Lagerverwaltung {
 			int produktId = idVergabe();
 			produkttmp.setProduktId(produktId);
 
+			// hier exeption, falls keine Lagerplätze
 			Lagerplatz zuBelegen = Lagerplatz.lagerplatzSuchen(lagerplatzIdSuchen());
 
 			Produkt produkt = new Produkt(produkttmp.getKategorie(), produkttmp.getMarke(), produkttmp.getProduktId(),
 					zuBelegen);
 
+			System.out.println(produkt);
 			console.einlagern(produkt, zuBelegen);
 
 		} catch (Exception e) {
@@ -408,10 +414,12 @@ public class Konsole implements Lagerverwaltung {
 	 * @author isedo
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		produktEinlesen("EinzulesendeDatei.txt", produktListe);
+
 		System.out.print(schriftFarbe.BLUE_BOLD_BRIGHT);
 		logoEinlesen("asciiArt.txt");
 		System.out.print(schriftFarbe.RESET);
+
+		produktEinlesen("EinzulesendeDatei.txt", produktListe);
 
 		System.out.println("Lager erstellen: y/n ");
 		String startEingabe = konsoleEingabe("Eingabe: ");
@@ -519,6 +527,7 @@ public class Konsole implements Lagerverwaltung {
 						// reset
 						auswahlMenu(produktListe, bezeichnungWareneingang);
 
+						// Validierung der Eingabe
 						int produktEingabe = konsoleEingabe("Eingabe: ",
 								"Error: Bitte Zahl zwischen: " + exitWareneingang + " - " + produktListe.size(),
 								exitWareneingang, produktListe.size());
@@ -543,7 +552,7 @@ public class Konsole implements Lagerverwaltung {
 
 					else if (menuEingabe == auswahlHauptMenu[3]) {
 
-						String bezeichnungSuche = "Suche";
+						String bezeichnungSuche = "Warenausgang";
 						int auswahlAusbuchenNr[] = { 0, 1 };
 						String auswahlAusbuchenMenu[] = { "zurueck", "Produkt-Id Eingabe" };
 

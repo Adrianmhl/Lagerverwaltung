@@ -3,6 +3,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * 
+ * @author isedo
+ *
+ */
+
 public class Input {
 
 //	private InputStreamReader isr; 
@@ -17,6 +23,14 @@ public class Input {
 
 	}
 
+	/**
+	 * liest Eingabe
+	 * 
+	 * @param eingabeMsg
+	 * @return
+	 * @throws IOException
+	 */
+
 	public String inputStrReader(String eingabeMsg) throws IOException {
 
 		InputStreamReader is = new InputStreamReader(System.in);
@@ -28,7 +42,19 @@ public class Input {
 
 	}
 
-	public int inputIntReader(String eingabeMsg, String eingabeError) throws IOException{
+	/**
+	 * liest Eingabe und wandelt in ein Integer
+	 * 
+	 * @isedo
+	 * @param eingabeMsg
+	 * @param eingabeError
+	 * @param min
+	 * @param max
+	 * @return
+	 * @throws IOException
+	 */
+
+	public int inputIntReader(String eingabeMsg, String eingabeError) throws IOException {
 
 		int num = 0;
 		String strInput;
@@ -55,6 +81,19 @@ public class Input {
 		return num;
 
 	}
+
+	/**
+	 * liest Eingabe und wandelt in ein Integer, eingabe muss zwischen min und max
+	 * liegen
+	 * 
+	 * @isedo
+	 * @param eingabeMsg
+	 * @param eingabeError
+	 * @param min
+	 * @param max
+	 * @return
+	 * @throws IOException
+	 */
 
 	public int inputIntReader(String eingabeMsg, String eingabeError, int min, int max) throws IOException {
 

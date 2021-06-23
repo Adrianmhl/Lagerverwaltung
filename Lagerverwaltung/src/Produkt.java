@@ -1,7 +1,7 @@
 /**
  * @author Adrian
  */
-public class Produkt implements Comparable {
+public class Produkt implements Comparable<Produkt> {
 
 	private String marke;
 	private String kategorie;
@@ -90,9 +90,14 @@ public class Produkt implements Comparable {
 				+ produktId + "]";
 	}
 
+	/**
+	 * @author isedo Vergleicht kategorie alphabetisch
+	 */
+
 	@Override
-	public int compareTo(Object o) {
-		return this.kategorie.compareTo(((Produkt) o).kategorie);
+	public int compareTo(Produkt o) {
+		return this.kategorie.compareTo(o.kategorie);
+
 	}
 
 }
