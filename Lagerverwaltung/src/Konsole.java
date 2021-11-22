@@ -105,6 +105,7 @@ public class Konsole implements Lagerverwaltung {
 
 	public static void produktEinlesen(String fileName, List<Produkt> produktListe) throws FileNotFoundException {
 
+		// yo
 		try {
 
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -327,7 +328,6 @@ public class Konsole implements Lagerverwaltung {
 			Produkt produkt = new Produkt(produkttmp.getKategorie(), produkttmp.getMarke(), produkttmp.getProduktId(),
 					zuBelegen);
 
-			System.out.println(produkt);
 			console.einlagern(produkt, zuBelegen);
 
 		} catch (Exception e) {
