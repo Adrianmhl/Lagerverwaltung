@@ -98,7 +98,7 @@ public class Konsole implements Lagerverwaltung {
 	/**
 	 * Diese Methode liest aus einer Textdatei eingegebene Marken und Kategroien aus
 	 * 
-	 * @author Adrian, isedo
+	 * @author Adrian, isedo s
 	 * @param dateipfad
 	 * @throws FileNotFoundException
 	 */
